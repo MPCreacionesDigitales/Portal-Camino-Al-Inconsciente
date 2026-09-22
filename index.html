@@ -104,21 +104,15 @@
       </svg>
     );
 
-    const IconCheck = () => (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
-      </svg>
-    );
-
     const IconArrowRight = () => (
       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
       </svg>
     );
 
-    const IconCopy = () => (
+    const IconExternalLink = () => (
       <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
       </svg>
     );
 
@@ -133,6 +127,93 @@
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
       </svg>
     );
+
+    const CaminoLogo = ({ size = "header" }) => {
+      const [imgFailed, setImgFailed] = useState(false);
+
+      if (size === "footer") {
+        return (
+          <a
+            href="https://caminoalinconsciente.cl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block shrink-0 group"
+            title="Camino Al Inconsciente"
+          >
+            <div className="w-8 h-8 rounded-full bg-white p-0.5 border border-amber-400/60 shadow-xs flex items-center justify-center overflow-hidden group-hover:border-amber-500 transition-all">
+              {!imgFailed ? (
+                <img
+                  src="imageninsta.png"
+                  alt="Logo Camino Al Inconsciente"
+                  className="w-full h-full object-contain rounded-full"
+                  onError={() => setImgFailed(true)}
+                />
+              ) : (
+                <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
+                  <circle cx="50" cy="50" r="46" stroke="#c89d47" strokeWidth="2.5" fill="#ffffff" />
+                  <path d="M50 12 L51 15 L54 16 L51 17 L50 20 L49 17 L46 16 L49 15 Z" fill="#c89d47" />
+                  <circle cx="50" cy="35" r="5" fill="#132338" />
+                  <path d="M36 32 Q45 42 50 42 Q55 42 64 32 Q58 40 50 50 Q42 40 36 32 Z" fill="#132338" />
+                  <path d="M46 50 Q56 60 46 72 L46 78" stroke="#132338" strokeWidth="2.5" strokeLinecap="round" />
+                  <path d="M54 50 Q44 60 54 72 L54 78" stroke="#132338" strokeWidth="2.5" strokeLinecap="round" />
+                  <line x1="47" y1="58" x2="53" y2="58" stroke="#c89d47" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="46" y1="65" x2="54" y2="65" stroke="#c89d47" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="48" y1="71" x2="52" y2="71" stroke="#c89d47" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M33 65 C32 50 43 47 46 63 C43 67 37 67 33 65 Z" fill="#4e6547" />
+                  <path d="M67 65 C68 50 57 47 54 63 C57 67 63 67 67 65 Z" fill="#4e6547" />
+                </svg>
+              )}
+            </div>
+          </a>
+        );
+      }
+
+      return (
+        <a 
+          href="https://caminoalinconsciente.cl/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="Visitar Camino Al Inconsciente"
+          className="group block shrink-0"
+        >
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white p-1.5 shadow-lg flex items-center justify-center overflow-hidden border-2 border-amber-400/80 transition-all duration-300 group-hover:scale-105 group-hover:border-amber-400 group-hover:shadow-amber-400/30">
+            {!imgFailed ? (
+              <img
+                src="imageninsta.png"
+                alt="Camino Al Inconsciente - Biodescodificación"
+                className="w-full h-full object-contain rounded-xl"
+                onError={() => setImgFailed(true)}
+              />
+            ) : (
+              <svg viewBox="0 0 200 200" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="200" height="200" rx="16" fill="#ffffff" />
+                <circle cx="100" cy="74" r="54" stroke="#c89d47" strokeWidth="2.5" fill="none" />
+                <path d="M100 16 L102 22 L108 24 L102 26 L100 32 L98 26 L92 24 L98 22 Z" fill="#c89d47" />
+                <circle cx="100" cy="36" r="1.8" fill="#c89d47" />
+                <circle cx="100" cy="42" r="2.2" fill="#c89d47" />
+                <circle cx="100" cy="48" r="2.6" fill="#c89d47" />
+                <circle cx="100" cy="58" r="6" fill="#132338" />
+                <path d="M72 52 C84 65 92 68 100 68 C108 68 116 65 128 52 C118 64 108 72 100 78 C92 72 82 64 72 52 Z" fill="#132338" />
+                <path d="M94 77 Q110 90 94 103 Q80 114 94 126 L94 133" stroke="#132338" strokeWidth="3" strokeLinecap="round" fill="none" />
+                <path d="M106 77 Q90 90 106 103 Q120 114 106 126 L106 133" stroke="#132338" strokeWidth="3" strokeLinecap="round" fill="none" />
+                <line x1="97" y1="88" x2="103" y2="88" stroke="#c89d47" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="93" y1="96" x2="107" y2="96" stroke="#c89d47" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="93" y1="104" x2="107" y2="104" stroke="#c89d47" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="95" y1="112" x2="105" y2="112" stroke="#c89d47" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="97" y1="120" x2="103" y2="120" stroke="#c89d47" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M68 114 C66 94 82 88 88 111 C82 116 74 116 68 114 Z" fill="#4e6547" />
+                <path d="M132 114 C134 94 118 88 112 111 C118 116 126 116 132 114 Z" fill="#4e6547" />
+                <text x="100" y="152" textAnchor="middle" fill="#0f172a" fontSize="9.5" fontWeight="800" fontFamily="sans-serif" letterSpacing="0.8">CAMINO AL INCONSCIENTE</text>
+                <line x1="45" y1="159" x2="155" y2="159" stroke="#c89d47" strokeWidth="0.8" />
+                <circle cx="100" cy="159" r="1.8" fill="#c89d47" />
+                <text x="100" y="171" textAnchor="middle" fill="#4e6547" fontSize="7.5" fontWeight="700" fontFamily="sans-serif" letterSpacing="2">BIODESCODIFICACIÓN</text>
+                <text x="100" y="183" textAnchor="middle" fill="#64748b" fontSize="5" fontWeight="600" fontFamily="sans-serif" letterSpacing="0.6">DESCUBRE • ENTIENDE • TRANSFORMA</text>
+              </svg>
+            )}
+          </div>
+        </a>
+      );
+    };
 
     // BASE DE DATOS COMPLETA EXTRAÍDA DEL DICCIONARIO PROHIBIDO DEL CUERPO (PÁGINAS 1 A 151)
     const PES_DATABASE = [
@@ -708,7 +789,6 @@
 
       // Escáner Bioemocional State
       const [currentStep, setCurrentStep] = useState(1);
-      const [copiedToast, setCopiedToast] = useState(false);
       const [userNote, setUserNote] = useState('');
       const whatsappNumber = '56990229732';
       const [selectedMsgTemplate, setSelectedMsgTemplate] = useState('directo');
@@ -732,7 +812,7 @@
       const [selectedLetter, setSelectedLetter] = useState('TODAS');
       const [selectedLayer, setSelectedLayer] = useState('TODAS');
       const [currentPage, setCurrentPage] = useState(1);
-      const itemsPerPage = 12; // 12 patologías por página
+      const itemsPerPage = 12;
 
       // LocalStorage Key
       const STORAGE_KEY = 'biodeco_state_v5';
@@ -955,37 +1035,6 @@ Me gustaría agendar una Sesión 1 a 1 para empezar mi proceso de desprogramaci�
 Siento que estoy en el momento justo para desprogramar esta memoria de conflicto y dar el paso hacia mi bienestar. Me gustaría agendar mi Sesión 1 a 1 de Biodescodificación contigo. ¿Qué disponibilidad de días u horarios tienes esta semana?`;
       };
 
-      const copyToClipboard = () => {
-        const textToCopy = `=== FICHA DEL ESCÁNER BIOEMOCIONAL - PORTAL CAMINO AL INCONSCIENTE ===
-ACOMPAÑAMIENTO EN BIODESCODIFICACIÓN CON MARIO
-SÍNTOMA / CONFLICTO: ${formData.symptomName || 'Sin especificar'}
-TIPO: ${formData.symptomType.toUpperCase()} | ANTIGÜEDAD: ${formData.duration.replace(/_/g, ' ')}
-INTENSIDAD EMOCIONAL: ${formData.intensity}/10
-
-ÍNDICE DE RECEPTIVIDAD BIO-EMOCIONAL: ${diagnosticResults.totalScore}%
-FASE: ${diagnosticResults.phaseTitle}
-
-PREGUNTA DE INDAGACIÓN RECOMENDADA:
-"${diagnosticResults.keyQuestion}"
-
-NOTAS DEL CONSULTANTE:
-${userNote || 'Sin notas adicionales.'}
-======================================================================`;
-
-        const textarea = document.createElement('textarea');
-        textarea.value = textToCopy;
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand('copy');
-          setCopiedToast(true);
-          setTimeout(() => setCopiedToast(false), 3000);
-        } catch (err) {
-          console.error('Error copiando ficha: ', err);
-        }
-        document.body.removeChild(textarea);
-      };
-
       const resetScanner = () => {
         const initial = {
           symptomType: 'físico',
@@ -1011,17 +1060,23 @@ ${userNote || 'Sin notas adicionales.'}
           {/* Main Top Header */}
           <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                  <IconSparkles />
-                  <span>Acompañamiento en Biodescodificación Biológica con Mario</span>
+              
+              <div className="flex items-center gap-4">
+                {/* Logo de Camino Al Inconsciente */}
+                <CaminoLogo size="header" />
+
+                <div>
+                  <div className="inline-flex items-center gap-2 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                    <IconSparkles />
+                    <span>Acompañamiento en Biodescodificación Biológica con Mario</span>
+                  </div>
+                  <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                    Portal Camino Al Inconsciente
+                  </h1>
+                  <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl">
+                    Explora las {PES_DATABASE.length} patologías del Diccionario de Programas Especiales de Supervivencia (PES) o evalúa la madurez de tu síntoma en el Escáner Bioemocional 1 a 1.
+                  </p>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-                  Portal Camino Al Inconsciente
-                </h1>
-                <p className="text-slate-300 text-sm sm:text-base mt-1 max-w-2xl">
-                  Explora las {PES_DATABASE.length} patologías del Diccionario de Programas Especiales de Supervivencia (PES) o evalúa la madurez de tu síntoma en el Escáner Bioemocional 1 a 1.
-                </p>
               </div>
 
               {activeTab === 'scanner' && currentStep === 5 && (
@@ -1874,6 +1929,7 @@ ${userNote || 'Sin notas adicionales.'}
                         </div>
                       </div>
 
+                      {/* Action Links: WhatsApp + Website */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                         <a
                           href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(getWhatsAppMessage())}`}
@@ -1884,12 +1940,14 @@ ${userNote || 'Sin notas adicionales.'}
                           Enviar Ficha por WhatsApp a Mario
                         </a>
 
-                        <button
-                          onClick={copyToClipboard}
-                          className="flex items-center justify-center gap-2 p-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl text-sm transition-all text-center border border-slate-700"
+                        <a
+                          href="https://caminoalinconsciente.cl/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 p-4 bg-slate-800 hover:bg-indigo-900/60 text-slate-200 hover:text-white font-semibold rounded-xl text-sm transition-all text-center border border-slate-700 hover:border-indigo-600/50 shadow-sm group"
                         >
-                          <IconCopy /> {copiedToast ? '¡Ficha Copiada con Éxito!' : 'Copiar Mi Diagnóstico'}
-                        </button>
+                          <IconExternalLink /> Ir a Camino Al Inconsciente
+                        </a>
                       </div>
 
                       <div className="text-center text-xs text-slate-500">
@@ -1906,12 +1964,20 @@ ${userNote || 'Sin notas adicionales.'}
           </div>
 
           {/* Bottom Footer */}
-          <div className="bg-slate-50 border-t border-slate-100 px-6 py-4 text-center text-xs text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <span>© Portal Camino Al Inconsciente • Acompañamiento con Mario</span>
+          <div className="bg-slate-50 border-t border-slate-100 px-6 py-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div className="flex items-center gap-2.5">
+              <CaminoLogo size="footer" />
+              <span className="font-medium text-slate-600">© Portal Camino Al Inconsciente • Acompañamiento con Mario</span>
+            </div>
             <div className="flex items-center gap-4">
-              <span className="inline-flex items-center gap-1">
-                <IconCheck /> Avance Guardado Localmente
-              </span>
+              <a 
+                href="https://caminoalinconsciente.cl/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="font-bold text-indigo-600 hover:text-indigo-800 hover:underline"
+              >
+                caminoalinconsciente.cl
+              </a>
               <span>WhatsApp: +56 9 9022 9732</span>
             </div>
           </div>
