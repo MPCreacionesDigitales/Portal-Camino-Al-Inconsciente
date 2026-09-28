@@ -785,7 +785,7 @@
     ];
 
     function App() {
-      const [activeTab, setActiveTab] = useState('dictionary');
+      const [activeTab, setActiveTab] = useState('scanner');
 
       // Escáner Bioemocional State
       const [currentStep, setCurrentStep] = useState(1);
@@ -1090,7 +1090,19 @@ Siento que estoy en el momento justo para desprogramar esta memoria de conflicto
             </div>
 
             {/* TAB SELECTOR BAR */}
+            {}
             <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-slate-800">
+              <button
+                onClick={() => switchTab('scanner')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                  activeTab === 'scanner'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-900/40'
+                    : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`}
+              >
+                <IconCalculator /> Escáner Bioemocional
+              </button>
+
               <button
                 onClick={() => switchTab('dictionary')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
@@ -1103,17 +1115,6 @@ Siento que estoy en el momento justo para desprogramar esta memoria de conflicto
                 <span className="bg-emerald-500/30 text-emerald-200 text-[11px] px-2 py-0.5 rounded-full font-bold">
                   {PES_DATABASE.length}
                 </span>
-              </button>
-
-              <button
-                onClick={() => switchTab('scanner')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'scanner'
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-900/40'
-                    : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-                }`}
-              >
-                <IconCalculator /> Escáner Bioemocional
               </button>
             </div>
 
