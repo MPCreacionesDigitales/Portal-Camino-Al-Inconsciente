@@ -64,7 +64,7 @@
   <script type="text/babel">
     const { useState, useMemo, useEffect } = React;
 
-    // Componente del Logo Oficial de Camino Al Inconsciente
+    // Logo Oficial de Camino Al Inconsciente
     function CaminoLogo({ className = "w-full max-w-sm" }) {
       return (
         <div className={`flex flex-col items-center text-center justify-center p-2 ${className}`}>
@@ -137,44 +137,615 @@
       );
     }
 
-    // Base de Datos de Patologías (PES)
+    // BASE DE DATOS COMPLETA EXTRAÍDA DEL DICCIONARIO PROHIBIDO DEL CUERPO (A-Z)
     const BANCO_PES = [
-      { id: 1, nombre: "Acné", organo: "Glándulas sebáceas de la piel", capa: "Ectodermo", conflicto: "Separación estética o desvalorización de la imagen.", fase: "Vagotónica (fase de reparación, con inflamación y pus)." },
-      { id: 2, nombre: "Adenoma", organo: "Glándulas (hipófisis, tiroides, etc.)", capa: "Endodermo / Mesodermo", conflicto: "No sentirse suficientemente capaz, rápido o apto.", fase: "Vagotónica (proliferación benigna en reparación)." },
-      { id: 3, nombre: "Afonía", organo: "Cuerdas vocales, laringe", capa: "Ectodermo", conflicto: "Miedo en el territorio o no poder expresarse.", fase: "Simpaticotónica o Vagotónica (inflamación/ronquera)." },
-      { id: 4, nombre: "Alergia", organo: "Piel, mucosas, sistema inmune", capa: "Ectodermo", conflicto: "Separación o invasión del territorio.", fase: "Vagotónica (inflamación por contacto con el alérgeno)." },
-      { id: 5, nombre: "Amigdalitis", organo: "Amígdalas", capa: "Endodermo", conflicto: "No poder tragar una situación injusta, ofensa o humillación.", fase: "Vagotónica (dolor e inflamación al resolver)." },
-      { id: 6, nombre: "Anemia", organo: "Médula ósea roja", capa: "Mesodermo Nuevo", conflicto: "Desvalorización profunda sobre uno mismo.", fase: "Simpaticotónica (reducción de glóbulos rojos)." },
-      { id: 7, nombre: "Angina de pecho", organo: "Músculo cardíaco y arterias coronarias", capa: "Ectodermo / Mesodermo", conflicto: "Pérdida territorial o amenaza al territorio.", fase: "Simpaticotónica (dolor y constricción durante el conflicto)." },
-      { id: 8, nombre: "Anorexia", organo: "Hipotálamo / sistema digestivo", capa: "Ectodermo / Endodermo", conflicto: "Deseo de control, rechazo materno o del crecimiento.", fase: "Simpaticotónica (falta de apetito, hipervigilancia)." },
-      { id: 9, nombre: "Apendicitis", organo: "Apéndice (intestino grueso)", capa: "Endodermo", conflicto: "No poder evacuar una situación sucia o repugnante.", fase: "Vagotónica (inflamación aguda en reparación)." },
-      { id: 10, nombre: "Asma", organo: "Bronquios", capa: "Ectodermo", conflicto: "Miedo en el territorio, opresión, falta de espacio.", fase: "Vagotónica (espasmos y dificultad para respirar)." },
-      { id: 11, nombre: "Bronquitis", organo: "Bronquios", capa: "Ectodermo", conflicto: "Conflicto de territorio o miedo a perderlo.", fase: "Vagotónica (inflamación de los bronquios)." },
-      { id: 12, nombre: "Bruxismo", organo: "Músculos mandibulares", capa: "Mesodermo Nuevo", conflicto: "Impotencia o rabia contenida, necesidad de control.", fase: "Simpaticotónica (tensión muscular prolongada)." },
-      { id: 13, nombre: "Cáncer de pulmón", organo: "Alvéolos pulmonares", capa: "Endodermo", conflicto: "Miedo a morir por asfixia o pérdida de espacio vital.", fase: "Simpaticotónica (proliferación celular)." },
-      { id: 14, nombre: "Cáncer de mama", organo: "Glándulas mamarias o conductos", capa: "Endodermo / Ectodermo", conflicto: "Preocupación por el nido o conflicto de separación.", fase: "Simpaticotónica o Vagotónica según tejido." },
-      { id: 15, nombre: "Colon Irritable", organo: "Colon / Intestino delgado", capa: "Endodermo", conflicto: "Conflicto de control emocional o experiencias indigeribles.", fase: "Fase oscilante por recaídas constantes." },
-      { id: 16, nombre: "Dermatitis", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Conflicto de separación o contacto no deseado.", fase: "Vagotónica (inflamación, picazón y enrojecimiento)." },
-      { id: 17, nombre: "Diabetes tipo 2", organo: "Páncreas y receptores celulares", capa: "Endodermo / Mesodermo", conflicto: "Resistencia al cambio, frustración o defensa frente al entorno.", fase: "Fase prolongada adaptativa." },
-      { id: 18, nombre: "Gastritis", organo: "Estómago", capa: "Endodermo", conflicto: "Situación indigesta, vivencia de injusticia o contrariedad.", fase: "Vagotónica (dolor e inflamación durante la curación)." },
-      { id: 19, nombre: "Herpes labial", organo: "Labios", capa: "Ectodermo", conflicto: "Conflicto de separación o contacto prohibido/desagradable.", fase: "Vagotónica (vesículas y dolor en reparación)." },
-      { id: 20, nombre: "Hipertensión arterial", organo: "Arterias / corazón", capa: "Mesodermo Nuevo", conflicto: "Conflicto de sobrecarga, resistencia o presión emocional.", fase: "Simpaticotónica (presión elevada adaptativa)." },
-      { id: 21, nombre: "Insomnio", organo: "Sistema nervioso central", capa: "Ectodermo", conflicto: "Hiperalerta, miedo nocturno o estado de peligro sostenido.", fase: "Simpaticotónica (imposibilidad de relajación)." },
-      { id: 22, nombre: "Migraña", organo: "Cerebro / vasos sanguíneos", capa: "Ectodermo", conflicto: "Conflicto de control, desvalorización intelectual o sobrecarga.", fase: "Vagotónica (congestión y dolor durante reparación)." },
-      { id: 23, nombre: "Psoriasis", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Doble conflicto de separación (querer y no querer contacto).", fase: "Fase activa y de reparación simultánea." },
-      { id: 24, nombre: "Rosácea", organo: "Piel del rostro", capa: "Ectodermo", conflicto: "Conflicto de vergüenza, exposición no deseada o ataque a la cara.", fase: "Vagotónica (enrojecimiento como reparación)." },
-      { id: 25, nombre: "Sinusitis", organo: "Senos paranasales", capa: "Endodermo", conflicto: "Presentimiento de peligro o situación que 'huele mal'.", fase: "Vagotónica (inflamación y congestión)." },
-      { id: 26, nombre: "Tendinitis", organo: "Tendones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por acción forzada o imposibilidad de ejecutar.", fase: "Vagotónica (inflamación dolorosa en curación)." },
-      { id: 27, nombre: "Tiroides (Hipotiroidismo)", organo: "Glándula Tiroides", capa: "Endodermo", conflicto: "Sentirse impotente ante la velocidad del tiempo; querer frenar.", fase: "Vagotónica (ralentización metabólica)." },
-      { id: 28, nombre: "Úlcera gástrica", organo: "Estómago", capa: "Endodermo", conflicto: "Contrariedad indigesta territorial con rabia o rencor.", fase: "Simpaticotónica (ulceración activa)." },
-      { id: 29, nombre: "Várices", organo: "Venas", capa: "Mesodermo Nuevo", conflicto: "Sentirse atado a una situación, llevar una bola de hierro.", fase: "Vagotónica (dilatación venosa)." },
-      { id: 30, nombre: "Zona (Herpes Zóster)", organo: "Piel y nervios", capa: "Ectodermo", conflicto: "Separación brutal, contacto muy sucio o agresión en la zona.", fase: "Vagotónica (ampollas dolorosas en trayecto nervioso)." }
+      // A
+      { id: 1, nombre: "Absceso", organo: "Tejidos blandos", capa: "Ectodermo / Mesodermo", conflicto: "Conflicto con enojo contenido o ataque local.", fase: "Vagotónica (acumulación de pus como reparación)." },
+      { id: 2, nombre: "Acidez estomacal", organo: "Estómago", capa: "Endodermo", conflicto: "Conflicto indigesto, algo que no se puede aceptar o digerir.", fase: "Simpaticotónica (hiperacidez en conflicto activo)." },
+      { id: 3, nombre: "Acné", organo: "Glándulas sebáceas de la piel", capa: "Ectodermo", conflicto: "Separación estética o desvalorización de la imagen.", fase: "Vagotónica (reparación con inflamación y pus)." },
+      { id: 4, nombre: "Adenitis", organo: "Ganglios linfáticos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización relacionada con defensa o protección.", fase: "Vagotónica (inflamación en curación)." },
+      { id: 5, nombre: "Adenocarcinoma de pulmón", organo: "Alvéolos pulmonares", capa: "Endodermo", conflicto: "Miedo a morir por asfixia o falta de aire.", fase: "Simpaticotónica (proliferación celular activa)." },
+      { id: 6, nombre: "Adenoma", organo: "Glándulas (hipófisis, tiroides, etc.)", capa: "Mesodermo Nuevo / Endodermo", conflicto: "No sentirse suficientemente capaz, rápido o apto.", fase: "Vagotónica (proliferación benigna en reparación)." },
+      { id: 7, nombre: "Adenopatía", organo: "Ganglios linfáticos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización local o conflicto de protección.", fase: "Vagotónica (agrandamiento del ganglio en reparación)." },
+      { id: 8, nombre: "Afonía", organo: "Cuerdas vocales, laringe", capa: "Ectodermo", conflicto: "Miedo en el territorio o no poder expresarse.", fase: "Simpaticotónica o Vagotónica según fase." },
+      { id: 9, nombre: "Aftas bucales", organo: "Mucosa oral", capa: "Ectodermo", conflicto: "Separación con contacto oral desagradable.", fase: "Vagotónica (ulceración dolorosa en la mucosa)." },
+      { id: 10, nombre: "Agrandamiento de próstata", organo: "Próstata", capa: "Endodermo", conflicto: "Conflicto de frustración sexual o territorial.", fase: "Vagotónica (proliferación en fase de solución)." },
+      { id: 11, nombre: "Alergia", organo: "Piel, mucosas, sistema inmune", capa: "Ectodermo", conflicto: "Separación o invasión del territorio.", fase: "Vagotónica (inflamación por contacto con alérgeno)." },
+      { id: 12, nombre: "Alergia estacional", organo: "Mucosas nasales, ojos, bronquios", capa: "Ectodermo", conflicto: "Separación o recuerdo simbólico del conflicto con el entorno.", fase: "Vagotónica (al recordar el conflicto)." },
+      { id: 13, nombre: "Alucinaciones", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Conflicto de percepción, distorsión territorial o miedo extremo.", fase: "Vagotónica (descargas durante la resolución)." },
+      { id: 14, nombre: "Amebiasis", organo: "Colon", capa: "Endodermo", conflicto: "Situación sucia, repugnante o invasiva en el territorio.", fase: "Vagotónica (eliminación de toxinas y regeneración)." },
+      { id: 15, nombre: "Amenorrea", organo: "Eje hipotálamo-hipófisis-ovario", capa: "Ectodermo / Mesodermo", conflicto: "Conflictos sexuales, miedo a ser mujer, estrés intenso.", fase: "Simpaticotónica (inhibición reproductiva activa)." },
+      { id: 16, nombre: "Amigdalitis", organo: "Amígdalas", capa: "Endodermo", conflicto: "No poder tragar una situación injusta, ofensa o humillación.", fase: "Vagotónica (dolor e inflamación al resolver)." },
+      { id: 17, nombre: "Anemia", organo: "Médula ósea roja", capa: "Mesodermo Nuevo", conflicto: "Desvalorización profunda sobre uno mismo.", fase: "Simpaticotónica (reducción de glóbulos rojos)." },
+      { id: 18, nombre: "Aneurisma", organo: "Arterias (pared vascular)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización intensa relacionada con circulación arterial.", fase: "Vagotónica (debilitamiento y dilatación)." },
+      { id: 19, nombre: "Aneurisma cerebral", organo: "Arterias cerebrales", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por no poder controlar pensamientos o situaciones mentales.", fase: "Vagotónica (dilatación arterial en reparación)." },
+      { id: 20, nombre: "Angina de pecho", organo: "Músculo cardíaco y arterias coronarias", capa: "Mesodermo Nuevo / Ectodermo", conflicto: "Pérdida territorial o amenaza al territorio.", fase: "Simpaticotónica (dolor y constricción activa)." },
+      { id: 21, nombre: "Anorexia", organo: "Hipotálamo / sistema digestivo", capa: "Ectodermo / Endodermo", conflicto: "Deseo de control, rechazo materno o del crecimiento.", fase: "Simpaticotónica (falta de apetito, hipervigilancia)." },
+      { id: 22, nombre: "Apendicitis", organo: "Apéndice (intestino grueso)", capa: "Endodermo", conflicto: "No poder evacuar una situación sucia o repugnante.", fase: "Vagotónica (inflamación aguda en reparación)." },
+      { id: 23, nombre: "Aplasia medular", organo: "Médula ósea", capa: "Mesodermo Nuevo", conflicto: "Desvalorización total y existencial, pérdida del sentido de la vida.", fase: "Simpaticotónica (inhibición celular profunda)." },
+      { id: 24, nombre: "Arritmia", organo: "Nódulo sinusal / miocardio", capa: "Mesodermo Nuevo / Ectodermo", conflicto: "Miedo en el territorio, susto inesperado, conflicto existencial.", fase: "Simpaticotónica (alteración del ritmo cardíaco)." },
+      { id: 25, nombre: "Artritis", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por falta de rendimiento o conflicto con el movimiento.", fase: "Vagotónica (inflamación aguda en reparación)." },
+      { id: 26, nombre: "Artrosis", organo: "Cartílago y hueso articular", capa: "Mesodermo Nuevo", conflicto: "Desvalorización crónica respecto a la movilidad o función articular.", fase: "Vagotónica (reconstrucción lenta con rigidez)." },
+      { id: 27, nombre: "Asma", organo: "Bronquios", capa: "Ectodermo", conflicto: "Miedo en el territorio, opresión, falta de espacio.", fase: "Vagotónica (broncoespasmos y dificultad para respirar)." },
+      { id: 28, nombre: "Astenia", organo: "Sistema nervioso central / músculos", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Agotamiento postconflicto; fase de recuperación profunda.", fase: "Vagotónica (debilitamiento en curación)." },
+      { id: 29, nombre: "Ataxia", organo: "Cerebelo / sistema motor", capa: "Mesodermo Antiguo", conflicto: "Desprotección motriz, miedo a caer o perder el control físico.", fase: "Vagotónica (pérdida de coordinación en reparación)." },
+      { id: 30, nombre: "Atonía muscular", organo: "Músculos voluntarios", capa: "Mesodermo Nuevo", conflicto: "Desvalorización motora profunda o no poder actuar.", fase: "Simpaticotónica (pérdida de tono muscular activa)." },
+
+      // B
+      { id: 31, nombre: "Bacteriemia", organo: "Sangre (sistémico)", capa: "Mesodermo Nuevo", conflicto: "Reparación de conflicto profundo, sistema inmune en curación.", fase: "Vagotónica (respuesta inflamatoria en resolución)." },
+      { id: 32, nombre: "Balanitis erosiva", organo: "Glande del pene", capa: "Ectodermo", conflicto: "Contacto sexual vivido como agresión o vergüenza.", fase: "Vagotónica (ulceración e inflamación en curación)." },
+      { id: 33, nombre: "Balanitis xerótica obliterante", organo: "Glande y prepucio", capa: "Ectodermo", conflicto: "Separación sexual crónica o abuso simbólico.", fase: "Vagotónica crónica (cicatrización progresiva)." },
+      { id: 34, nombre: "Balanopostitis", organo: "Glande y prepucio", capa: "Ectodermo", conflicto: "Separación sexual, vergüenza o conflicto de suciedad sexual.", fase: "Vagotónica (inflamación reparadora del epitelio)." },
+      { id: 35, nombre: "Balonitis", organo: "Glande del pene", capa: "Ectodermo", conflicto: "Conflicto de separación sexual o contacto no deseado.", fase: "Vagotónica (inflamación y sensibilidad)." },
+      { id: 36, nombre: "Bartholinitis", organo: "Glándulas de Bartolino", capa: "Ectodermo", conflicto: "Separación sexual dolorosa o no deseada.", fase: "Vagotónica (inflamación y dolor en curación)." },
+      { id: 37, nombre: "Bazo agrandado", organo: "Bazo", capa: "Mesodermo Nuevo", conflicto: "Desvalorización relacionada con la protección o la sangre.", fase: "Vagotónica (crecimiento orgánico en reparación)." },
+      { id: 38, nombre: "Blefaroconjuntivitis", organo: "Párpados y conjuntiva", capa: "Ectodermo", conflicto: "Separación visual, no querer ver algo o alguien.", fase: "Vagotónica (inflamación ocular en curación)." },
+      { id: 39, nombre: "Blefaritis", organo: "Párpados", capa: "Ectodermo", conflicto: "Contacto visual no deseado o separación visual.", fase: "Vagotónica (inflamación y enrojecimiento)." },
+      { id: 40, nombre: "Blefaroespasmo", organo: "Músculo orbicular del ojo", capa: "Ectodermo", conflicto: "Protección visual o miedo a lo que se ve.", fase: "Simpaticotónica (espasmos por tensión activa)." },
+      { id: 41, nombre: "Blefaroptosis", organo: "Músculo elevador del párpado", capa: "Mesodermo Nuevo", conflicto: "Desvalorización relacionada con la percepción visual.", fase: "Simpaticotónica (pérdida de fuerza muscular)." },
+      { id: 42, nombre: "Blenorragia (gonorrea)", organo: "Uretra y genitales", capa: "Ectodermo", conflicto: "Suciedad sexual, culpa o vergüenza.", fase: "Vagotónica (secreción purulenta e inflamación)." },
+      { id: 43, nombre: "Blenorragia crónica", organo: "Uretra", capa: "Ectodermo", conflicto: "Culpa o suciedad crónica en la sexualidad.", fase: "Vagotónica prolongada (episodios recurrentes)." },
+      { id: 44, nombre: "Bochornos (sofocos)", organo: "Sistema neurovegetativo", capa: "Ectodermo", conflicto: "Pérdida de feminidad o miedo al envejecimiento.", fase: "Vagotónica (calor súbito por descarga adaptativa)." },
+      { id: 45, nombre: "Bocio", organo: "Tiroides", capa: "Endodermo / Mesodermo Nuevo", conflicto: "Sentirse lento o incapaz de actuar con rapidez.", fase: "Vagotónica (proliferación de tejido en reparación)." },
+      { id: 46, nombre: "Bocio multinodular", organo: "Tiroides", capa: "Endodermo", conflicto: "No poder actuar con suficiente rapidez repetidamente.", fase: "Vagotónica (crecimiento nodular tras varios conflictos)." },
+      { id: 47, nombre: "Bocio nodular solitario", organo: "Tiroides", capa: "Endodermo", conflicto: "Un evento aislado de impotencia o lentitud.", fase: "Vagotónica (crecimiento nodular en conflicto único)." },
+      { id: 48, nombre: "Bocio tóxico difuso (Graves)", organo: "Tiroides", capa: "Endodermo", conflicto: "Sentimiento de urgencia extrema, necesidad de actuar rápido.", fase: "Simpaticotónica prolongada (hiperfunción tiroidea)." },
+      { id: 49, nombre: "Bradicardia", organo: "Nódulo sinusal / corazón", capa: "Mesodermo Nuevo / Ectodermo", conflicto: "Resolución de un conflicto de miedo en el territorio.", fase: "Vagotónica (ritmo cardíaco lento en recuperación)." },
+      { id: 50, nombre: "Bradipnea", organo: "Centro respiratorio cerebral", capa: "Ectodermo", conflicto: "Fase de reparación tras amenaza de asfixia o miedo extremo.", fase: "Vagotónica (respiración lenta durante curación)." },
+      { id: 51, nombre: "Bromhidrosis", organo: "Glándulas sudoríparas", capa: "Ectodermo", conflicto: "Vergüenza por el olor corporal, rechazo social.", fase: "Vagotónica (hiperactividad glandular simbólica)." },
+      { id: 52, nombre: "Broncoespasmo", organo: "Bronquios", capa: "Ectodermo", conflicto: "Miedo en el territorio o en el entorno inmediato.", fase: "Vagotónica (espasmos en fase reparadora)." },
+      { id: 53, nombre: "Bronconeumonía", organo: "Bronquios y alvéolos", capa: "Ectodermo / Endodermo", conflicto: "Miedo en el territorio y miedo a morir por falta de aire.", fase: "Vagotónica (inflamación, fiebre y tos)." },
+      { id: 54, nombre: "Bronquiectasias", organo: "Bronquios", capa: "Endodermo", conflicto: "Conflicto territorial crónico o de sentirse invadido.", fase: "Fase crónica (dilatación bronquial permanente)." },
+      { id: 55, nombre: "Bronquitis", organo: "Bronquios", capa: "Ectodermo", conflicto: "Conflicto de territorio o miedo a perderlo.", fase: "Vagotónica (inflamación durante la reparación)." },
+      { id: 56, nombre: "Bronquitis asmática", organo: "Bronquios", capa: "Ectodermo", conflicto: "Conflicto de territorio y miedo en el entorno familiar.", fase: "Vagotónica (inflamación y espasmos respiratorios)." },
+      { id: 57, nombre: "Bruxismo", organo: "Músculos mandibulares", capa: "Mesodermo Nuevo", conflicto: "Impotencia o rabia contenida, necesidad de control.", fase: "Simpaticotónica (tensión muscular prolongada)." },
+      { id: 58, nombre: "Bulimia", organo: "Sistema digestivo / límbico", capa: "Endodermo / Ectodermo", conflicto: "Culpa, pérdida de control, rechazo interno.", fase: "Oscilante (ciclos de atracón y purga)." },
+      { id: 59, nombre: "Bursitis", organo: "Bursa sinovial", capa: "Mesodermo Nuevo", conflicto: "Desvalorización motora localizada, sentirse incapaz en el movimiento.", fase: "Vagotónica (inflamación dolorosa en curación)." },
+
+      // C
+      { id: 60, nombre: "Candidiasis", organo: "Mucosa genital, intestinal o bucal", capa: "Ectodermo", conflicto: "Suciedad, vergüenza o invasión simbólica.", fase: "Vagotónica (proliferación de cándida en reparación)." },
+      { id: 61, nombre: "Cáncer de cerebro", organo: "Glía o neuronas", capa: "Mesodermo Nuevo", conflicto: "Conflicto de control o pérdida de control vital.", fase: "Vagotónica (gliomas en fases de reparación)." },
+      { id: 62, nombre: "Cáncer de colon", organo: "Colon", capa: "Endodermo", conflicto: "Pérdida repugnante, sucia o indigerible.", fase: "Simpaticotónica (crecimiento de tejido digestivo)." },
+      { id: 63, nombre: "Cáncer de esófago", organo: "Esófago", capa: "Endodermo", conflicto: "No poder tragar una situación humillante o repugnante.", fase: "Simpaticotónica (proliferación en mucosa esofágica)." },
+      { id: 64, nombre: "Cáncer de estómago", organo: "Estómago", capa: "Endodermo", conflicto: "Conflicto indigesto, no poder aceptar una situación.", fase: "Simpaticotónica (proliferación gástrica activa)." },
+      { id: 65, nombre: "Cáncer de hígado", organo: "Hígado", capa: "Endodermo", conflicto: "Carencia o miedo a morir de hambre.", fase: "Simpaticotónica (proliferación de hepatocitos)." },
+      { id: 66, nombre: "Cáncer de laringe", organo: "Laringe", capa: "Ectodermo", conflicto: "Miedo territorial o imposibilidad de expresar algo vital.", fase: "Simpaticotónica (úlceras laringeas activas)." },
+      { id: 67, nombre: "Cáncer de mama", organo: "Glándulas o conductos mamarios", capa: "Endodermo / Ectodermo", conflicto: "Preocupación por el nido o separación del hijo/pareja.", fase: "Simpaticotónica o Vagotónica según tejido." },
+      { id: 68, nombre: "Cáncer de médula ósea", organo: "Médula ósea", capa: "Mesodermo Nuevo", conflicto: "Desvalorización existencial profunda.", fase: "Simpaticotónica (interrupción de hematopoyesis)." },
+      { id: 69, nombre: "Cáncer de ovario", organo: "Ovario", capa: "Mesodermo Antiguo", conflicto: "Pérdida profunda relacionada con un hijo o pareja.", fase: "Simpaticotónica (proliferación ovárica activa)." },
+      { id: 70, nombre: "Cáncer de páncreas", organo: "Páncreas", capa: "Endodermo", conflicto: "Pérdida territorial alimentaria, injusticia familiar.", fase: "Simpaticotónica (hiperplasia del tejido pancreático)." },
+      { id: 71, nombre: "Cáncer de piel (melanoma)", organo: "Piel pigmentaria", capa: "Ectodermo", conflicto: "Ataque o mancha en la integridad personal.", fase: "Simpaticotónica (proliferación protectora)." },
+      { id: 72, nombre: "Cáncer de próstata", organo: "Próstata", capa: "Endodermo", conflicto: "Conflicto sexual o de pérdida de rol masculino.", fase: "Simpaticotónica (proliferación del epitelio)." },
+      { id: 73, nombre: "Cáncer de pulmón", organo: "Alvéolos pulmonares", capa: "Endodermo", conflicto: "Miedo a morir por asfixia o pérdida de espacio vital.", fase: "Simpaticotónica (proliferación en alvéolos)." },
+      { id: 74, nombre: "Cáncer de testículo", organo: "Testículos", capa: "Mesodermo Antiguo", conflicto: "Pérdida de un hijo o conflicto de herencia genética.", fase: "Simpaticotónica (proliferación celular germinal)." },
+      { id: 75, nombre: "Cáncer de útero", organo: "Endometrio", capa: "Endodermo", conflicto: "Conflicto sexual o de procreación frustrada.", fase: "Simpaticotónica (proliferación endometrial activa)." },
+      { id: 76, nombre: "Cáncer de vejiga", organo: "Mucosa de la vejiga", capa: "Ectodermo", conflicto: "Conflicto territorial o de marcaje.", fase: "Simpaticotónica (úlceras de mucosa activa)." },
+      { id: 77, nombre: "Caries", organo: "Esmalte dental", capa: "Ectodermo", conflicto: "No poder morder, atacar o defenderse.", fase: "Simpaticotónica (desmineralización activa)." },
+      { id: 78, nombre: "Cefalea tensional", organo: "Músculos del cráneo", capa: "Mesodermo Nuevo", conflicto: "Autoexigencia, control, desvalorización intelectual.", fase: "Simpaticotónica / Vagotónica con congestión." },
+      { id: 79, nombre: "Celulitis", organo: "Tejido subcutáneo", capa: "Mesodermo Antiguo", conflicto: "Ataque al cuerpo o autorechazo estético.", fase: "Vagotónica (inflamación del tejido graso)." },
+      { id: 80, nombre: "Cervicitis", organo: "Cuello uterino", capa: "Ectodermo", conflicto: "Separación o invasión sexual no deseada.", fase: "Vagotónica (inflamación en reparación)." },
+      { id: 81, nombre: "Ciática", organo: "Nervio ciático", capa: "Ectodermo", conflicto: "Movimiento forzado, sentirse atado o bloqueado.", fase: "Vagotónica (dolor nervioso en reparación)." },
+      { id: 82, nombre: "Cistitis", organo: "Vejiga urinaria", capa: "Ectodermo", conflicto: "Conflicto territorial o invasión del espacio íntimo.", fase: "Vagotónica (inflamación dolorosa al curar)." },
+      { id: 83, nombre: "Cistitis intersticial", organo: "Mucosa vesical", capa: "Ectodermo", conflicto: "Conflicto crónico de territorio o trauma sexual.", fase: "Vagotónica prolongada (dolor y ardor crónico)." },
+      { id: 84, nombre: "Cólico renal", organo: "Uréter o pelvis renal", capa: "Mesodermo Nuevo", conflicto: "Marcaje de territorio o separación.", fase: "Vagotónica (espasmos dolorosos en resolución)." },
+      { id: 85, nombre: "Colitis ulcerosa", organo: "Colon", capa: "Endodermo", conflicto: "Conflicto indigesto repetido, sucio o humillante.", fase: "Vagotónica (inflamación y ulceración)." },
+      { id: 86, nombre: "Condilomas", organo: "Mucosa genital", capa: "Ectodermo", conflicto: "Conflicto de vergüenza o culpa sexual.", fase: "Vagotónica (proliferación de papilomas en reparación)." },
+      { id: 87, nombre: "Conjuntivitis", organo: "Conjuntiva del ojo", capa: "Ectodermo", conflicto: "Separación visual o no querer ver a alguien.", fase: "Vagotónica (inflamación ocular al resolver)." },
+      { id: 88, nombre: "Coxalgia", organo: "Articulación de la cadera", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por no poder avanzar o cargar con algo.", fase: "Vagotónica (dolor de cadera en reparación)." },
+      { id: 89, nombre: "Criptorquidia", organo: "Testículo", capa: "Mesodermo Antiguo", conflicto: "Conflicto sexual precoz o miedo a madurar sexualmente.", fase: "Simpaticotónica (testículo no desciende)." },
+
+      // D
+      { id: 90, nombre: "Dacrioadenitis", organo: "Glándula lagrimal", capa: "Ectodermo", conflicto: "Contención emocional, no poder expresar el llanto.", fase: "Vagotónica (inflamación en fase de descarga)." },
+      { id: 91, nombre: "Dacriocistitis", organo: "Conducto lagrimal", capa: "Ectodermo", conflicto: "No poder llorar o expresar una emoción visual.", fase: "Vagotónica (inflamación u obstrucción en reparación)." },
+      { id: 92, nombre: "Dactilitis", organo: "Dedos (huesos/articulaciones)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por no poder tocar o agarrar.", fase: "Vagotónica (hinchazón y dolor en curación)." },
+      { id: 93, nombre: "Degeneración discal", organo: "Discos intervertebrales", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por no poder sostener responsabilidades.", fase: "Simpaticotónica crónica (pérdida de masa discal)." },
+      { id: 94, nombre: "Degeneración macular", organo: "Retina", capa: "Ectodermo", conflicto: "No querer ver una situación futura o dolorosa.", fase: "Simpaticotónica (pérdida progresiva de visión)." },
+      { id: 95, nombre: "Depresión", organo: "Corteza cerebral / límbico", capa: "Ectodermo", conflicto: "Pérdida profunda, culpa o desvalorización existencial.", fase: "Fase prolongada (inhibición emocional)." },
+      { id: 96, nombre: "Dermatitis", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación o contacto no deseado.", fase: "Vagotónica (inflamación, enrojecimiento y picazón)." },
+      { id: 97, nombre: "Dermatitis atópica", organo: "Piel", capa: "Ectodermo", conflicto: "Separación afectiva vivida con impotencia o abandono.", fase: "Vagotónica (erupción y picazón en curación)." },
+      { id: 98, nombre: "Dermatomiositis", organo: "Piel y músculos", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Separación y desvalorización motora combinadas.", fase: "Vagotónica (inflamación durante curación)." },
+      { id: 99, nombre: "Dermografismo", organo: "Piel", capa: "Ectodermo", conflicto: "Separación o contacto conflictivo simbólico.", fase: "Vagotónica (hiperrespuesta cutánea)." },
+      { id: 100, nombre: "Desmayo (síncope)", organo: "Sistema cardiovascular/nervioso", capa: "Ectodermo", conflicto: "Shock emocional agudo, pérdida o miedo extremo.", fase: "Vagotónica (caída de tensión por reparación brusca)." },
+      { id: 101, nombre: "Diabetes tipo 1", organo: "Páncreas (células beta)", capa: "Endodermo", conflicto: "Resistencia u oposición a figura cercana (padre/madre).", fase: "Simpaticotónica (pérdida funcional de células beta)." },
+      { id: 102, nombre: "Diabetes tipo 2", organo: "Páncreas y receptores", capa: "Endodermo / Mesodermo Nuevo", conflicto: "Resistencia al cambio, frustración crónica con la vida.", fase: "Fase prolongada (hiperglucemia adaptativa)." },
+      { id: 103, nombre: "Diarrea", organo: "Intestino delgado o colon", capa: "Endodermo", conflicto: "Deseo de eliminar una situación desagradable o sucia.", fase: "Vagotónica (tránsito acelerado en reparación)." },
+      { id: 104, nombre: "Disartria", organo: "Sistema nervioso / habla", capa: "Ectodermo / Mesodermo", conflicto: "Conflicto de expresión, miedo a equivocarse al hablar.", fase: "Vagotónica o Simpaticotónica según fase." },
+      { id: 105, nombre: "Discinesia", organo: "Sistema nervioso motor", capa: "Ectodermo", conflicto: "Movimiento reprimido, deseo de actuar bloqueado.", fase: "Vagotónica (movimientos involuntarios)." },
+      { id: 106, nombre: "Discopatía lumbar", organo: "Discos lumbares", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el rol de soporte o sostén familiar.", fase: "Vagotónica (dolor lumbar al reparar)." },
+      { id: 107, nombre: "Disfagia", organo: "Esófago", capa: "Endodermo", conflicto: "No poder tragar algo vivido como ofensivo o humillante.", fase: "Vagotónica (dificultad para tragar)." },
+      { id: 108, nombre: "Disfunción eréctil", organo: "Tejido eréctil del pene", capa: "Mesodermo Nuevo", conflicto: "Desvalorización sexual o miedo al rendimiento.", fase: "Simpaticotónica (bloqueo funcional activo)." },
+      { id: 109, nombre: "Disfonía", organo: "Cuerdas vocales / laringe", capa: "Ectodermo", conflicto: "No poder decir algo vital, miedo a hablar.", fase: "Vagotónica (ronquera o pérdida de voz)." },
+      { id: 110, nombre: "Disgeusia", organo: "Lengua / papilas gustativas", capa: "Ectodermo", conflicto: "Sabor desagradable simbólico, traición o desagrado.", fase: "Vagotónica (alteración del gusto en curación)." },
+      { id: 111, nombre: "Dislexia", organo: "Corteza cerebral (lenguaje)", capa: "Ectodermo", conflicto: "Expresión bloqueada o vergüenza intelectual.", fase: "Simpaticotónica crónica (inhibición verbal)." },
+      { id: 112, nombre: "Dismenorrea", organo: "Útero", capa: "Mesodermo Nuevo", conflicto: "Conflicto sexual o rechazo a la feminidad.", fase: "Vagotónica (dolor menstrual en reparación)." },
+      { id: 113, nombre: "Dispepsia", organo: "Estómago", capa: "Endodermo", conflicto: "Situación simbólica indigerible, humillación o asco.", fase: "Simpaticotónica (hipersecreción y molestia)." },
+      { id: 114, nombre: "Distimia", organo: "Sistema límbico", capa: "Ectodermo", conflicto: "Tristeza crónica, baja autoestima y falta de sentido.", fase: "Fase prolongada post-conflicto." },
+      { id: 115, nombre: "Distrofia muscular", organo: "Músculos esqueléticos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización muscular crónica o incapacidad simbólica.", fase: "Simpaticotónica prolongada (degeneración)." },
+      { id: 116, nombre: "Disuria", organo: "Uretra", capa: "Ectodermo", conflicto: "Marcaje de territorio o trauma sexual.", fase: "Vagotónica (dolor al orinar en reparación)." },
+      { id: 117, nombre: "Dolor de cabeza", organo: "Vasos cerebrales / nervioso", capa: "Ectodermo", conflicto: "Sobrecarga mental, miedo, presión o culpa.", fase: "Vagotónica (señal de reparación del sistema nervioso)." },
+      { id: 118, nombre: "Dolor de espalda", organo: "Columna / músculos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por falta de apoyo o carga excesiva.", fase: "Vagotónica (dolor en fase de reparación)." },
+      { id: 119, nombre: "Duodenitis", organo: "Duodeno", capa: "Endodermo", conflicto: "No poder digerir una situación de injusticia.", fase: "Vagotónica (inflamación en resolución)." },
+
+      // E
+      { id: 120, nombre: "Eccema dishidrótico", organo: "Piel de manos y pies", capa: "Ectodermo", conflicto: "Separación por contacto en manos/pies o entorno.", fase: "Vagotónica (ampollas y picazón en curación)." },
+      { id: 121, nombre: "Eczema", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación o contacto no deseado, afectivo.", fase: "Vagotónica (inflamación y enrojecimiento)." },
+      { id: 122, nombre: "Embolia pulmonar", organo: "Arterias pulmonares", capa: "Mesodermo Nuevo", conflicto: "Resolución repentina de un miedo a morir.", fase: "Vagotónica (obstrucción por trombo en curación)." },
+      { id: 123, nombre: "Encefalitis", organo: "Encéfalo", capa: "Mesodermo Nuevo", conflicto: "Conflicto intenso de control o amenaza mental.", fase: "Vagotónica (inflamación cerebral reparadora)." },
+      { id: 124, nombre: "Endocarditis", organo: "Endocardio", capa: "Endodermo", conflicto: "Ataque al corazón simbólico (traición afectiva profunda).", fase: "Vagotónica (inflamación en curación)." },
+      { id: 125, nombre: "Endometriosis", organo: "Endometrio fuera del útero", capa: "Endodermo", conflicto: "Frustración con el territorio sexual o imposibilidad del nido.", fase: "Vagotónica (proliferación ectópica en reparación)." },
+      { id: 126, nombre: "Enfermedad celíaca", organo: "Intestino delgado", capa: "Endodermo", conflicto: "Indigestión crónico, traición relacionada con alimentos/entorno.", fase: "Fase oscilante por reactivación." },
+      { id: 127, nombre: "Enfermedad de Crohn", organo: "Íleon y colon", capa: "Endodermo", conflicto: "Conflicto de pérdida o situación indigerible larga.", fase: "Vagotónica (ulceración e inflamación)." },
+      { id: 128, nombre: "Enfermedad de Ménière", organo: "Oído interno", capa: "Ectodermo", conflicto: "No querer escuchar algo o situación que desorienta.", fase: "Vagotónica (vértigo, zumbido y pérdida auditiva)." },
+      { id: 129, nombre: "Enfermedad de Parkinson", organo: "Sustancia negra / motor", capa: "Mesodermo Nuevo", conflicto: "Miedo a moverse o arrepentimiento por acciones pasadas.", fase: "Simpaticotónica prolongada (rigidez y temblor)." },
+      { id: 130, nombre: "Enteritis", organo: "Intestino delgado", capa: "Endodermo", conflicto: "No poder asimilar o digerir una situación.", fase: "Vagotónica (diarrea e inflamación)." },
+      { id: 131, nombre: "Enterocolitis", organo: "Intestino delgado y colon", capa: "Endodermo", conflicto: "Suciedad emocional o situación indigerible.", fase: "Vagotónica (diarrea e inflamación)." },
+      { id: 132, nombre: "Enuresis", organo: "Vejiga urinaria", capa: "Ectodermo", conflicto: "Conflicto territorial o emocional nocturno no resuelto.", fase: "Vagotónica (micción involuntaria en reparación)." },
+      { id: 133, nombre: "Epicondilitis", organo: "Codo (tendones/músculos)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el gesto de dar o soltar.", fase: "Vagotónica (dolor muscular/tendinoso en curación)." },
+      { id: 134, nombre: "Epidermólisis bullosa", organo: "Piel", capa: "Ectodermo", conflicto: "Separación extrema, sensibilidad al contacto físico.", fase: "Vagotónica (ampollas por fricción mínima)." },
+      { id: 135, nombre: "Epigastralgia", organo: "Estómago (epigastrio)", capa: "Endodermo", conflicto: "Situación indigesta difícil de procesar.", fase: "Simpaticotónica (dolor por hipersecreción activa)." },
+      { id: 136, nombre: "Epilepsia", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Conflicto motor inesperado o susto brusco.", fase: "Crisis epiléptica (descarga vagotónica)." },
+      { id: 137, nombre: "Eritema", organo: "Piel", capa: "Ectodermo", conflicto: "Contacto afectivo o separación emocional.", fase: "Vagotónica (enrojecimiento por reparación)." },
+      { id: 138, nombre: "Eritema multiforme", organo: "Piel", capa: "Ectodermo", conflicto: "Separación violenta con carga emocional intensa.", fase: "Vagotónica (lesiones cutáneas en reparación)." },
+      { id: 139, nombre: "Eritrocitosis", organo: "Médula ósea", capa: "Mesodermo Nuevo", conflicto: "Compensación por vivencia de falta de aire o territorio.", fase: "Vagotónica (glóbulos rojos elevados en curación)." },
+      { id: 140, nombre: "Eritrodermia", organo: "Piel", capa: "Ectodermo", conflicto: "Separación intensa con fuerte carga emocional.", fase: "Vagotónica (inflamación generalizada de la piel)." },
+      { id: 141, nombre: "Eructos excesivos", organo: "Estómago", capa: "Endodermo", conflicto: "Deseo de expulsar algo no digerido, frustración.", fase: "Vagotónica (liberación de gases en curación)." },
+      { id: 142, nombre: "Esclerosis múltiple", organo: "Sistema nervioso (mielina)", capa: "Ectodermo", conflicto: "Conflictos motores múltiples, desvalorización motora.", fase: "Simpaticotónica crónica (desmielinización)." },
+      { id: 143, nombre: "Esofagitis", organo: "Esófago", capa: "Endodermo", conflicto: "No poder tragar una situación o agresión verbal.", fase: "Vagotónica (inflamación del esófago)." },
+      { id: 144, nombre: "Esofagitis eosinofílica", organo: "Esófago", capa: "Endodermo", conflicto: "No poder tragar algo repetido o persistente.", fase: "Vagotónica (inflamación y proliferación)." },
+      { id: 145, nombre: "Esofagitis por reflujo", organo: "Esófago", capa: "Endodermo", conflicto: "Indigestión emocional, necesidad de devolver lo vivido.", fase: "Vagotónica (acidez e inflamación en curación)." },
+      { id: 146, nombre: "Esofagospasmo", organo: "Esófago", capa: "Endodermo", conflicto: "No poder tragar una situación dolorosa o humillante.", fase: "Vagotónica (espasmo en reparación)." },
+      { id: 147, nombre: "Esguince", organo: "Ligamentos articulares", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en la movilidad o dirección.", fase: "Vagotónica (dolor e inflamación al reparar)." },
+      { id: 148, nombre: "Espondilitis anquilosante", organo: "Columna vertebral", capa: "Mesodermo Nuevo", conflicto: "Desvalorización crónica del eje de soporte.", fase: "Vagotónica crónica (rigidez y fusión ósea)." },
+      { id: 149, nombre: "Esquizofrenia", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Conflictos territoriales intensos y contradictorios.", fase: "Conflicto activo prolongado (doble conflicto)." },
+
+      // F
+      { id: 150, nombre: "Fallo cardíaco", organo: "Músculo cardíaco", capa: "Mesodermo Nuevo", conflicto: "Desvalorización vital, impotencia existencial profunda.", fase: "Vagotónica (agotamiento tras conflicto largo)." },
+      { id: 151, nombre: "Fallo renal", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Líquidos, abandono, desesperanza o desarraigo.", fase: "Simpaticotónica prolongada (reducción renal)." },
+      { id: 152, nombre: "Falta de apetito", organo: "Hipotálamo / digestivo", capa: "Ectodermo / Endodermo", conflicto: "Asco, rechazo o duelo emocional activo.", fase: "Simpaticotónica (inhibición del hambre)." },
+      { id: 153, nombre: "Faringitis", organo: "Faringe", capa: "Endodermo", conflicto: "No poder tragar algo simbólicamente, injusticia verbal.", fase: "Vagotónica (dolor e inflamación en reparación)." },
+      { id: 154, nombre: "Faringitis estreptocócica", organo: "Faringe", capa: "Endodermo", conflicto: "No poder tragar una situación verbal o humillante.", fase: "Vagotónica (dolor, pus e inflamación)." },
+      { id: 155, nombre: "Faringoamigdalitis", organo: "Faringe y amígdalas", capa: "Endodermo", conflicto: "No poder tragar una situación injusta o agresiva.", fase: "Vagotónica (inflamación e infección en curación)." },
+      { id: 156, nombre: "Faringoespasmo", organo: "Faringe", capa: "Endodermo", conflicto: "Miedo o dificultad simbólica para tragar la realidad.", fase: "Vagotónica (espasmos en resolución)." },
+      { id: 157, nombre: "Fasciculaciones", organo: "Fibras motoras musculares", capa: "Mesodermo Nuevo", conflicto: "Control motriz, miedo a perder movilidad.", fase: "Vagotónica (descargas durante reparación)." },
+      { id: 158, nombre: "Fascitis necrosante", organo: "Fascia muscular", capa: "Mesodermo Nuevo", conflicto: "Desvalorización agresiva o autoataque extremo.", fase: "Vagotónica (inflamación severa y necrosis)." },
+      { id: 159, nombre: "Fascitis plantar", organo: "Fascia del pie", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el movimiento, no poder avanzar.", fase: "Vagotónica (dolor y engrosamiento al curar)." },
+      { id: 160, nombre: "Fatiga crónica", organo: "Nervioso / muscular", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Agotamiento post-conflicto, sentir que no se puede más.", fase: "Vagotónica prolongada (cansancio persistente)." },
+      { id: 161, nombre: "Fecaloma", organo: "Colon", capa: "Endodermo", conflicto: "No poder soltar una situación sucia o dolorosa.", fase: "Fase crónica (retención por bloqueo simbólico)." },
+      { id: 162, nombre: "Fenilcetonuria", organo: "Metabolismo hepático", capa: "Endodermo", conflicto: "Conflicto genético con herencia o identidad familiar.", fase: "Simpaticotónica (programa biológico ancestral)." },
+      { id: 163, nombre: "Fibromialgia", organo: "Músculos y tejido conectivo", capa: "Mesodermo Nuevo", conflicto: "Desvalorización y sobrecarga emocional múltiple.", fase: "Vagotónica (dolor generalizado en reparación)." },
+      { id: 164, nombre: "Fibrosis hepática", organo: "Hígado", capa: "Endodermo", conflicto: "Carencia crónico, rabia retenida o injusticia económica.", fase: "Vagotónica prolongada (endurecimiento progresivo)." },
+      { id: 165, nombre: "Fibrosis pulmonar", organo: "Tejido conectivo pulmonar", capa: "Mesodermo Nuevo", conflicto: "Miedo a morir por asfixia o pérdida de territorio.", fase: "Vagotónica crónica (rigidez por curaciones)." },
+      { id: 166, nombre: "Fibrosis quística", organo: "Pulmones, páncreas, digestivo", capa: "Endodermo", conflicto: "Pérdida ancestral o ahogo simbólico familiar.", fase: "Simpaticotónica prolongada (hipersecreción)." },
+      { id: 167, nombre: "Fiebre", organo: "Termorregulador / inmune", capa: "Depende del órgano", conflicto: "Resolución del conflicto, inicio de reparación.", fase: "Vagotónica (elevación de temperatura)." },
+      { id: 168, nombre: "Fiebre tifoidea", organo: "Intestino delgado / linfático", capa: "Endodermo", conflicto: "Invasión emocional o entorno contaminado.", fase: "Vagotónica (fiebre alta, diarrea e inflamación)." },
+      { id: 169, nombre: "Fimosis", organo: "Prepucio", capa: "Ectodermo", conflicto: "Contacto sexual vivido como agresión o vergüenza.", fase: "Vagotónica (retracción en reparación)." },
+      { id: 170, nombre: "Fístula anal", organo: "Canal anal", capa: "Endodermo", conflicto: "Expulsión simbólica de algo repugnante.", fase: "Vagotónica (vía de eliminación alternativa)." },
+      { id: 171, nombre: "Fístula perianal", organo: "Zona anal externa", capa: "Endodermo", conflicto: "Expulsión simbólica crónica o vergüenza.", fase: "Vagotónica crónica (canal de drenaje)." },
+      { id: 172, nombre: "Flebitis", organo: "Venas", capa: "Mesodermo Nuevo", conflicto: "Desvalorización circulatoria o emocional.", fase: "Vagotónica (inflamación venosa al resolver)." },
+      { id: 173, nombre: "Fobia específica", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Conflicto ligado a un estímulo sensorial no resuelto.", fase: "Fase oscilante (ante el desencadenante)." },
+      { id: 174, nombre: "Fobia social", organo: "Corteza / límbico", capa: "Ectodermo", conflicto: "Rechazo o humillación en contextos sociales.", fase: "Simpaticotónica prolongada (evitación)." },
+      { id: 175, nombre: "Forúnculo", organo: "Folículo piloso de la piel", capa: "Ectodermo", conflicto: "Separación o ataque simbólico localizado.", fase: "Vagotónica (inflamación purulenta)." },
+      { id: 176, nombre: "Fotofobia", organo: "Ojos / sistema visual", capa: "Ectodermo", conflicto: "No querer ver, sensibilidad a la verdad o entorno.", fase: "Vagotónica (hipersensibilidad en curación)." },
+      { id: 177, nombre: "Fotosensibilidad", organo: "Piel / sistema visual", capa: "Ectodermo", conflicto: "No querer ser visto o expuesto.", fase: "Vagotónica (hipersensibilidad como reparación)." },
+      { id: 178, nombre: "Fractura ósea", organo: "Hueso", capa: "Mesodermo Nuevo", conflicto: "Desvalorización intensa respecto a la estructura corporal.", fase: "Vagotónica (consolidación y reparación ósea)." },
+      { id: 179, nombre: "Furunculosis", organo: "Folículo piloso", capa: "Ectodermo", conflicto: "Separación afectiva o ataque reiterado.", fase: "Vagotónica (forúnculos múltiples en reparación)." },
+
+      // G
+      { id: 180, nombre: "Galactorrea", organo: "Glándulas mamarias", capa: "Endodermo", conflicto: "Separación o necesidad de nutrir a alguien simbólicamente.", fase: "Vagotónica (producción láctea fuera de tiempo)." },
+      { id: 181, nombre: "Gangrena", organo: "Tejido blando", capa: "Mesodermo Nuevo", conflicto: "Desvalorización severa, abandono extremo.", fase: "Vagotónica grave (necrosis por reparación fallida)." },
+      { id: 182, nombre: "Gastralgia", organo: "Estómago", capa: "Endodermo", conflicto: "Situación indigesta, asco o injusticia.", fase: "Simpaticotónica (dolor por hipersecreción)." },
+      { id: 183, nombre: "Gastritis", organo: "Estómago", capa: "Endodermo", conflicto: "Contrariedad indigesta, vivencia de injusticia.", fase: "Vagotónica (dolor e inflamación)." },
+      { id: 184, nombre: "Gastritis atrófica", organo: "Estómago", capa: "Endodermo", conflicto: "Asco o humillación crónica sin resolución.", fase: "Simpaticotónica crónica (atrofia glandular)." },
+      { id: 185, nombre: "Gastritis crónica", organo: "Estómago", capa: "Endodermo", conflicto: "Conflicto repetido de injusticia o contrariedad.", fase: "Fase oscilante (por recaídas constantes)." },
+      { id: 186, nombre: "Gastritis erosiva", organo: "Mucosa gástrica", capa: "Endodermo", conflicto: "Situación dura e indigesta con carga violenta.", fase: "Simpaticotónica (pérdida de mucosa gástrica)." },
+      { id: 187, nombre: "Gastritis nerviosa", organo: "Estómago", capa: "Endodermo", conflicto: "Conflicto indigesto sostenido por estrés emocional.", fase: "Fase oscilante (según reactivación)." },
+      { id: 188, nombre: "Gastroenteritis", organo: "Estómago e intestino", capa: "Endodermo", conflicto: "Situación indigesta o repugnante.", fase: "Vagotónica (diarrea, vómitos, fiebre)." },
+      { id: 189, nombre: "Ginecomastia", organo: "Glándula mamaria masculina", capa: "Endodermo", conflicto: "Identidad sexual, simbolismo materno no resuelto.", fase: "Vagotónica (proliferación mamaria)." },
+      { id: 190, nombre: "Gingivitis", organo: "Encías", capa: "Ectodermo", conflicto: "Ataque verbal o dificultad para 'morder'.", fase: "Vagotónica (inflamación de encías en reparación)." },
+      { id: 191, nombre: "Glaucoma", organo: "Nervio óptico / ojo", capa: "Ectodermo", conflicto: "Miedo visual, no querer ver una amenaza.", fase: "Simpaticotónica (aumento de presión intraocular)." },
+      { id: 192, nombre: "Glomerulonefritis", organo: "Riñón (glomérulos)", capa: "Mesodermo Antiguo", conflicto: "Abandono, pérdida o desarraigo.", fase: "Vagotónica (inflamación renal al resolver)." },
+      { id: 193, nombre: "Glosalgia", organo: "Lengua", capa: "Ectodermo", conflicto: "Dolor simbólico por palabra no dicha o vergüenza.", fase: "Vagotónica (dolor lingual al resolver)." },
+      { id: 194, nombre: "Glositis", organo: "Lengua", capa: "Ectodermo", conflicto: "Conflicto de expresión o palabra reprimida.", fase: "Vagotónica (inflamación y enrojecimiento)." },
+      { id: 195, nombre: "Glosodinia", organo: "Lengua", capa: "Ectodermo", conflicto: "Conflicto verbal no resuelto o algo que 'quema por dentro'.", fase: "Vagotónica (ardor y molestia lingual)." },
+      { id: 196, nombre: "Gonorrea", organo: "Uretra / genitales", capa: "Ectodermo", conflicto: "Contacto sexual sucio o vergonzoso.", fase: "Vagotónica (secreción purulenta)." },
+      { id: 197, nombre: "Gota", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por no poder avanzar o decidir.", fase: "Vagotónica (depósito de cristales e inflamación)." },
+      { id: 198, nombre: "Gota tofácea", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización crónica en el movimiento.", fase: "Vagotónica prolongada (cristales acumulados)." },
+      { id: 199, nombre: "Gripe", organo: "Vías respiratorias", capa: "Ectodermo", conflicto: "Separación leve o carga emocional reciente.", fase: "Vagotónica (fiebre, mucosidad y decaimiento)." },
+
+      // H
+      { id: 200, nombre: "Halitosis", organo: "Boca", capa: "Ectodermo", conflicto: "Represión de algo que 'quema por dentro'.", fase: "Vagotónica (mal aliento en reparación)." },
+      { id: 201, nombre: "Hemofilia", organo: "Sistema de coagulación", capa: "Mesodermo Nuevo", conflicto: "Memoria ancestral de violencia o heridas familiares.", fase: "Fase constitutiva (adaptación en sangre)." },
+      { id: 202, nombre: "Hemorragia nasal", organo: "Mucosa nasal", capa: "Ectodermo", conflicto: "Territorio, algo no dicho o invasión.", fase: "Vagotónica (sangrado al resolver el conflicto)." },
+      { id: 203, nombre: "Hemorroides", organo: "Venas rectales", capa: "Mesodermo Nuevo", conflicto: "Carga, esfuerzo, culpa o desvalorización material.", fase: "Vagotónica (inflamación venosa en reparación)." },
+      { id: 204, nombre: "Hepatitis", organo: "Hígado", capa: "Endodermo", conflicto: "Carencia, injusticia económica o traición familiar.", fase: "Vagotónica (inflamación hepática)." },
+      { id: 205, nombre: "Hepatomegalia", organo: "Hígado", capa: "Endodermo", conflicto: "Supervivencia, necesidad de almacenamiento simbólico.", fase: "Vagotónica (agrandamiento hepático)." },
+      { id: 206, nombre: "Hernia inguinal", organo: "Músculos inguinales", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por cargar con algo insostenible.", fase: "Vagotónica (protrusión y debilidad)." },
+      { id: 207, nombre: "Hernia umbilical", organo: "Tejido abdominal", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el núcleo familiar o vínculo materno.", fase: "Vagotónica (protrusión umbilical en reparación)." },
+      { id: 208, nombre: "Herpes genital", organo: "Genitales externos", capa: "Ectodermo", conflicto: "Separación sexual, contacto indeseado o vergüenza.", fase: "Vagotónica (úlceras, ardor y dolor)." },
+      { id: 209, nombre: "Herpes labial", organo: "Labios", capa: "Ectodermo", conflicto: "Separación o contacto prohibido.", fase: "Vagotónica (vesículas y dolor en reparación)." },
+      { id: 210, nombre: "Hipercolesterolemia", organo: "Sistema circulatorio / hígado", capa: "Mesodermo Nuevo / Endodermo", conflicto: "Protección, rigidez o defensa frente a amenazas.", fase: "Fase prolongada (elevación de colesterol adaptativo)." },
+      { id: 211, nombre: "Hiperestesia", organo: "Piel / sensitivo", capa: "Endodermo", conflicto: "Hipersensibilidad emocional o contacto excesivo.", fase: "Vagotónica (sensibilidad extrema)." },
+      { id: 212, nombre: "Hiperplasia prostática", organo: "Próstata", capa: "Endodermo", conflicto: "Frustración sexual, descendencia o rol masculino.", fase: "Vagotónica (crecimiento benigno prostático)." },
+      { id: 213, nombre: "Hipersomnia", organo: "Sistema nervioso central", capa: "Ectodermo", conflicto: "Fuga simbólica, evitar realidad dolorosa.", fase: "Vagotónica (sueño excesivo protector)." },
+      { id: 214, nombre: "Hipertensión arterial", organo: "Arterias / corazón", capa: "Mesodermo Nuevo", conflicto: "Resistencia, sobrecarga o presión constante.", fase: "Simpaticotónica (presión arterial elevada)." },
+      { id: 215, nombre: "Hipertiroidismo", organo: "Tiroides", capa: "Endodermo", conflicto: "Impotencia ante la velocidad o urgencia vital.", fase: "Simpaticotónica (aceleración metabólica)." },
+      { id: 216, nombre: "Hipoglucemia", organo: "Páncreas / glucosa", capa: "Endodermo", conflicto: "Preocupación por el otro, autoexigencia.", fase: "Simpaticotónica (caída de azúcar activa)." },
+      { id: 217, nombre: "Hipotensión arterial", organo: "Sistema cardiovascular", capa: "Mesodermo Nuevo", conflicto: "Derrota, falta de motivación o renuncia vital.", fase: "Vagotónica (descenso de presión arterial)." },
+      { id: 218, nombre: "Hipotiroidismo", organo: "Tiroides", capa: "Endodermo", conflicto: "Lentitud, resignación o derrota simbólica.", fase: "Vagotónica (bajo metabolismo constante)." },
+      { id: 219, nombre: "Hirsutismo", organo: "Piel / vello corporal", capa: "Ectodermo", conflicto: "Protección o endurecer la imagen femenina.", fase: "Vagotónica (crecimiento de vello adaptativo)." },
+
+      // I
+      { id: 220, nombre: "Ictericia", organo: "Hígado y vías biliares", capa: "Endodermo", conflicto: "Agresión simbólica o injusticia no digerida.", fase: "Vagotónica (bilirrubina elevada en curación)." },
+      { id: 221, nombre: "Impotencia sexual", organo: "Sistema genital masculino", capa: "Mesodermo Nuevo / Endodermo", conflicto: "Desvalorización masculina o frustración sexual.", fase: "Simpaticotónica (bloqueo funcional activo)." },
+      { id: 222, nombre: "Incontinencia urinaria", organo: "Vejiga y esfínteres", capa: "Mesodermo Nuevo", conflicto: "Pérdida de control o poder sobre el territorio.", fase: "Vagotónica (pérdida de control urinario)." },
+      { id: 223, nombre: "Infección de garganta", organo: "Faringe / amígdalas", capa: "Endodermo", conflicto: "No poder tragar algo simbólicamente.", fase: "Vagotónica (dolor e inflamación en resolución)." },
+      { id: 224, nombre: "Infección de oído (otitis)", organo: "Oído medio", capa: "Endodermo", conflicto: "No querer oír algo, discusión o grito.", fase: "Vagotónica (dolor, fiebre y secreción)." },
+      { id: 225, nombre: "Infección intestinal", organo: "Intestino delgado y colon", capa: "Endodermo", conflicto: "No poder digerir una situación emocional.", fase: "Vagotónica (diarrea y fiebre)." },
+      { id: 226, nombre: "Infección pulmonar", organo: "Pulmones (alvéolos)", capa: "Endodermo", conflicto: "Miedo a morir, miedo existencial o pérdida vital.", fase: "Vagotónica (tos, fiebre y secreciones)." },
+      { id: 227, nombre: "Infección urinaria", organo: "Vejiga", capa: "Endodermo", conflicto: "Límites territoriales o invasión del espacio.", fase: "Vagotónica (inflamación y ardor al curar)." },
+      { id: 228, nombre: "Infección vaginal", organo: "Vagina", capa: "Endodermo", conflicto: "Relación sexual sucia o indeseada.", fase: "Vagotónica (secreción y picazón)." },
+      { id: 229, nombre: "Infertilidad femenina", organo: "Ovarios / útero", capa: "Endodermo / Mesodermo Nuevo", conflicto: "Pérdida, miedo a ser madre o trauma sexual.", fase: "Simpaticotónica (inhibición hormonal)." },
+      { id: 230, nombre: "Infertilidad masculina", organo: "Testículos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización sexual o pérdida de descendencia.", fase: "Simpaticotónica (esperma disminuido)." },
+      { id: 231, nombre: "Inflamación crónica", organo: "Variable", capa: "Variable", conflicto: "Conflicto activo repetitivo o no resuelto.", fase: "Fase oscilante (recaídas continuas)." },
+      { id: 232, nombre: "Inflamación de ganglios", organo: "Ganglios linfáticos", capa: "Mesodermo Nuevo", conflicto: "Ataque biológico o defensa familiar.", fase: "Vagotónica (aumento de tamaño reparador)." },
+      { id: 233, nombre: "Influenza (gripe)", organo: "Vías respiratorias", capa: "Ectodermo", conflicto: "Separación afectiva o estrés reciente.", fase: "Vagotónica (fiebre y dolor en curación)." },
+      { id: 234, nombre: "Inmunodeficiencia", organo: "Sistema inmunológico", capa: "Mesodermo Nuevo", conflicto: "Desvalorización profunda de la propia protección.", fase: "Simpaticotónica prolongada (defensas bajas)." },
+      { id: 235, nombre: "Insomnio", organo: "Sistema nervioso central", capa: "Ectodermo", conflicto: "Hiperalerta, miedo nocturno o peligro.", fase: "Simpaticotónica (imposibilidad de relajarse)." },
+      { id: 236, nombre: "Insuficiencia renal", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Abandono, desesperanza o ahogo simbólico.", fase: "Simpaticotónica (reducción de función renal)." },
+      { id: 237, nombre: "Intestino irritable", organo: "Colon / intestino delgado", capa: "Endodermo", conflicto: "Control emocional o falta de asimilación.", fase: "Fase oscilante por recaídas." },
+      { id: 238, nombre: "Intolerancia a la lactosa", organo: "Intestino delgado", capa: "Endodermo", conflicto: "Rechazo a la nutrición o afecto materno.", fase: "Simpaticotónica / Conflicto activo." },
+      { id: 239, nombre: "Irritación ocular", organo: "Conjuntiva del ojo", capa: "Ectodermo", conflicto: "Conflicto visual leve, algo que no se desea ver.", fase: "Vagotónica (lagrimeo y picazón)." },
+
+      // J
+      { id: 240, nombre: "Jactancia compulsiva", organo: "Laringe / expresión", capa: "Ectodermo", conflicto: "Necesidad constante de validación o afirmación.", fase: "Simpaticotónica (verborrea descargativa)." },
+      { id: 241, nombre: "Jadeo al dormir (apnea leve)", organo: "Tracto respiratorio", capa: "Endodermo", conflicto: "Miedo nocturno inconsciente, sensación de amenaza.", fase: "Simpaticotónica (alteración respiratoria)." },
+      { id: 242, nombre: "Jadeo crónico", organo: "Pulmones / respiratorio", capa: "Endodermo", conflicto: "Miedo a morir asfixiado, falta de aire simbólica.", fase: "Simpaticotónica (hiperventilación activa)." },
+      { id: 243, nombre: "Jadeo por esfuerzo mínimo", organo: "Alvéolos pulmonares", capa: "Endodermo", conflicto: "Miedo a no poder sobrevivir, angustia vital.", fase: "Simpaticotónica (mecanismo adaptativo)." },
+      { id: 244, nombre: "Jadeo tras el llanto", organo: "Sistema respiratorio", capa: "Endodermo", conflicto: "Descarga emocional luego de soltar el control.", fase: "Vagotónica (hiperventilación post emocional)." },
+      { id: 245, nombre: "Jaqueca", organo: "Vasos cerebrales / nervioso", capa: "Ectodermo", conflicto: "Control, sobrecarga mental o miedo anticipatorio.", fase: "Vagotónica (dolor intenso en reparación)." },
+      { id: 246, nombre: "Jaqueca premenstrual", organo: "Vasos cerebrales", capa: "Ectodermo", conflicto: "Anticipación al ciclo, carga mental femenina.", fase: "Vagotónica (dolor previo al sangrado)." },
+      { id: 247, nombre: "Jardiasis (giardiasis)", organo: "Intestino delgado", capa: "Endodermo", conflicto: "Contaminación simbólica o repulsión.", fase: "Vagotónica (diarrea en eliminación)." },
+      { id: 248, nombre: "Jirones de piel (rascado)", organo: "Piel", capa: "Ectodermo", conflicto: "Separación o contacto indeseado.", fase: "Vagotónica (lesiones visibles en curación)." },
+      { id: 249, nombre: "Joroba cervical", organo: "Columna cervical", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por cargar con problemas ajenos.", fase: "Vagotónica (adaptación postural en reparación)." },
+      { id: 250, nombre: "Joroba de viuda (giba dorsal)", organo: "Columna dorsal / grasa", capa: "Mesodermo Nuevo", conflicto: "Desvalorización femenina por pérdida, duelo o abandono.", fase: "Vagotónica (depósito graso y curvatura)." },
+      { id: 251, nombre: "Joroba dorsal (hipercifosis)", organo: "Columna dorsal", capa: "Mesodermo Nuevo", conflicto: "Desvalorización crónica al asumir responsabilidades.", fase: "Vagotónica (remodelación ósea)." },
+      { id: 252, nombre: "Joroba emocional", organo: "Trapecio / musculatura dorsal", capa: "Mesodermo Nuevo", conflicto: "Culpa emocional o represión de expresiones.", fase: "Vagotónica (contracción muscular en agotamiento)." },
+      { id: 253, nombre: "Juegos mentales obsesivos", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Control, duda o miedo a decidir.", fase: "Simpaticotónica (rumiación mental e insomnio)." },
+      { id: 254, nombre: "Jugo gástrico en exceso", organo: "Estómago", capa: "Endodermo", conflicto: "Situación indigesta, procesar rápidamente.", fase: "Simpaticotónica (hipersecreción gástrica)." },
+      { id: 255, nombre: "Juicio compulsivo hacia otros", organo: "Lóbulo frontal", capa: "Ectodermo", conflicto: "Superioridad moral, necesidad de controlar.", fase: "Simpaticotónica (actividad mental excesiva)." },
+      { id: 256, nombre: "Juicio de pareja destructivo", organo: "Sistema límbico", capa: "Ectodermo", conflicto: "Pérdida de control sobre los vínculos afectivos.", fase: "Simpaticotónica (obsesión, celos, ansiedad)." },
+      { id: 257, nombre: "Juicio severo a uno mismo", organo: "Sistema nervioso / suprarrenales", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Desvalorización interna, culpa o autoexigencia.", fase: "Oscilante (activación y agotamiento)." },
+      { id: 258, nombre: "Juventud prolongada", organo: "Hipófisis", capa: "Ectodermo", conflicto: "Autoimagen infantil, rechazo al crecimiento.", fase: "Simpaticotónica (inhibición hormonal)." },
+
+      // K
+      { id: 259, nombre: "Kaliopenia (hipokalemia)", organo: "Riñones / electrolitos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización y pérdida energética.", fase: "Simpaticotónica (pérdida de potasio activa)." },
+      { id: 260, nombre: "Kawasaki (síndrome)", organo: "Vasos sanguíneos", capa: "Mesodermo Nuevo", conflicto: "Separación aguda en niños y miedo por la vida.", fase: "Vagotónica (inflamación vascular sistémica)." },
+      { id: 261, nombre: "Keloide", organo: "Piel (cicatriz)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización estética o marca traumática pasada.", fase: "Vagotónica (crecimiento excesivo en cicatriz)." },
+      { id: 262, nombre: "Keratitis", organo: "Córnea del ojo", capa: "Ectodermo", conflicto: "Conflicto visual agudo, algo que se desea o no ver.", fase: "Vagotónica (inflamación corneal)." },
+      { id: 263, nombre: "Keratitis herpética", organo: "Córnea", capa: "Ectodermo", conflicto: "Separación visual o contacto forzado.", fase: "Vagotónica (úlceras corneales en curación)." },
+      { id: 264, nombre: "Keratitis seca (ojo seco)", organo: "Córnea", capa: "Ectodermo", conflicto: "Desconexión emocional con lo que se ve.", fase: "Fase crónica (falta de lubricación)." },
+      { id: 265, nombre: "Keratocono", organo: "Córnea", capa: "Ectodermo", conflicto: "Percepción visual distorsionada o miedo a ver la realidad.", fase: "Fase crónica (adelgazamiento corneal)." },
+      { id: 266, nombre: "Keratodermia", organo: "Piel (palmas/plantas)", capa: "Ectodermo", conflicto: "Endurecimiento por protección ante entorno hostil.", fase: "Fase crónica (engrosamiento cutáneo)." },
+      { id: 267, nombre: "Keratofacia", organo: "Piel del rostro", capa: "Ectodermo", conflicto: "Imagen, vergüenza o necesidad de endurecer el rostro.", fase: "Vagotónica (engrosamiento cutáneo facial)." },
+      { id: 268, nombre: "Keratoglobus", organo: "Córnea", capa: "Ectodermo", conflicto: "Percepción distorsionada o fragilidad visual.", fase: "Fase crónica (protrusión corneal)." },
+      { id: 269, nombre: "Keratolisis", organo: "Córnea / piel plantar", capa: "Ectodermo", conflicto: "Separación por contacto no deseado o fricción.", fase: "Vagotónica (erosión epitelial)." },
+      { id: 270, nombre: "Keratoma", organo: "Piel", capa: "Ectodermo", conflicto: "Fricción constante o roce simbólico.", fase: "Vagotónica (formación de callosidad)." },
+      { id: 271, nombre: "Keratopatía", organo: "Córnea", capa: "Ectodermo", conflicto: "Impacto traumático que afecta la vista.", fase: "Vagotónica (opacidad o lesiones corneales)." },
+      { id: 272, nombre: "Kernicterus", organo: "Sistema nervioso neonatos", capa: "Ectodermo", conflicto: "Abandono perinatal o toxicidad simbólica.", fase: "Constitucional (daño neurológico irreversible)." },
+      { id: 273, nombre: "Kinking carotídeo", organo: "Arterias carótidas", capa: "Mesodermo Nuevo", conflicto: "Presión vital, miedo al colapso o decisiones forzadas.", fase: "Fase crónica (acodamiento arterial)." },
+      { id: 274, nombre: "Klebsiella (infección)", organo: "Pulmones / urinarias", capa: "Endodermo", conflicto: "Miedo a morir o invasión territorial.", fase: "Vagotónica (infección bacteriana en reparación)." },
+      { id: 275, nombre: "Klinefelter (síndrome)", organo: "Sistema genético / endocrino", capa: "Ectodermo", conflicto: "Transgeneracional de identidad sexual o aceptación.", fase: "Constitucional." },
+      { id: 276, nombre: "Korsakoff (síndrome)", organo: "Cerebro (memoria)", capa: "Ectodermo", conflicto: "Culpa o deseo inconsciente de olvidar traumas.", fase: "Fase crónica (amnesia persistente)." },
+      { id: 277, nombre: "Kreatinina elevada", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Sobrecarga o urgencia biológica por sobrevivir.", fase: "Simpaticotónica prolongada." },
+      { id: 278, nombre: "Kwashiorkor", organo: "Hígado / digestivo", capa: "Endodermo", conflicto: "Carencia afectiva y nutricional extrema.", fase: "Fase crónica (atrofia y edema)." },
+
+      // L
+      { id: 279, nombre: "Labio leporino", organo: "Labio superior", capa: "Ectodermo", conflicto: "Transgeneracional de identidad o comunicación.", fase: "Constitucional (malformación)." },
+      { id: 280, nombre: "Laringitis", organo: "Laringe", capa: "Ectodermo", conflicto: "Miedo o inhibición al expresarse.", fase: "Vagotónica (inflamación y pérdida de voz)." },
+      { id: 281, nombre: "Laringoespasmo", organo: "Laringe", capa: "Ectodermo", conflicto: "Miedo agudo a hablar o no ser escuchado.", fase: "Simpaticotónica (bloqueo respiratorio)." },
+      { id: 282, nombre: "Laringomalacia", organo: "Laringe (infantil)", capa: "Ectodermo", conflicto: "Miedo a respirar o separación al nacer.", fase: "Constitucional (debilidad estructural)." },
+      { id: 283, nombre: "Laringotraqueitis", organo: "Laringe / tráquea", capa: "Ectodermo", conflicto: "Miedo territorial o verbal no expresado.", fase: "Vagotónica (inflamación y tos)." },
+      { id: 284, nombre: "Lengua geográfica", organo: "Lengua", capa: "Ectodermo", conflicto: "Comunicación o separación por contacto oral.", fase: "Vagotónica (lesiones benignas)." },
+      { id: 285, nombre: "Lengua saburral", organo: "Lengua", capa: "Ectodermo", conflicto: "Rechazo a lo que se dice o se calla.", fase: "Vagotónica (placa blanca en curación)." },
+      { id: 286, nombre: "Leucemia", organo: "Médula ósea / sangre", capa: "Mesodermo Nuevo", conflicto: "Desvalorización profunda de uno mismo.", fase: "Vagotónica (proliferación celular reparadora)." },
+      { id: 287, nombre: "Leucocitosis", organo: "Sangre (leucocitos)", capa: "Mesodermo Nuevo", conflicto: "Defensa o ataque biológico agudo.", fase: "Vagotónica (proliferación inmunitaria)." },
+      { id: 288, nombre: "Leucopenia", organo: "Sangre (leucocitos)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización del sistema de defensa.", fase: "Simpaticotónica (disminución de defensas)." },
+      { id: 289, nombre: "Linfadenitis", organo: "Ganglios linfáticos", capa: "Mesodermo Nuevo", conflicto: "Lucha y defensa, sensación de amenaza.", fase: "Vagotónica (inflamación ganglionar)." },
+      { id: 290, nombre: "Linfoma", organo: "Sistema linfático", capa: "Mesodermo Nuevo", conflicto: "Ataque al propio cuerpo o amenaza biológica.", fase: "Vagotónica (crecimiento ganglionar)." },
+      { id: 291, nombre: "Lipoatrofia", organo: "Tejido adiposo", capa: "Mesodermo Nuevo", conflicto: "Desvalorización estética o rechazo corporal.", fase: "Simpaticotónica (pérdida de grasa local)." },
+      { id: 292, nombre: "Lipomatosis", organo: "Tejido graso", capa: "Mesodermo Nuevo", conflicto: "Protección o necesidad de defensa emocional.", fase: "Vagotónica (acumulación de grasa)." },
+      { id: 293, nombre: "Liposarcoma", organo: "Tejido adiposo", capa: "Mesodermo Nuevo", conflicto: "Desvalorización estética crónica.", fase: "Vagotónica (tumoración en reparación)." },
+      { id: 294, nombre: "Litiasis biliar", organo: "Vesícula biliar", capa: "Endodermo", conflicto: "Agresión no digerida o rencor reprimido.", fase: "Fase crónica (formación de cálculos)." },
+      { id: 295, nombre: "Litiasis renal", organo: "Riñones / uréteres", capa: "Mesodermo Antiguo", conflicto: "Separación, pérdida territorial o traición.", fase: "Fase crónica (cálculos renales)." },
+      { id: 296, nombre: "Lumbalgia", organo: "Columna lumbar", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el sostén económico o familiar.", fase: "Vagotónica (dolor de espalda en curación)." },
+      { id: 297, nombre: "Lupus", organo: "Tejidos varios", capa: "Variable", conflicto: "Autoataque simbólico o identidad fragmentada.", fase: "Fase oscilante por recaídas." },
+      { id: 298, nombre: "Luxación", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización localizada o pérdida de dirección.", fase: "Vagotónica (desplazamiento en reparación)." },
+
+      // M
+      { id: 299, nombre: "Mal aliento (halitosis)", organo: "Boca / microbiota", capa: "Endodermo", conflicto: "Palabras no dichas o culpa verbal.", fase: "Vagotónica (liberación de carga simbólica)." },
+      { id: 300, nombre: "Malaria", organo: "Sangre / hígado", capa: "Endodermo", conflicto: "Invasión simbólica, territorio amenazado.", fase: "Vagotónica (fiebre y eliminación)." },
+      { id: 301, nombre: "Malformaciones congénitas", organo: "Variable", capa: "Variable", conflicto: "Transgeneracionales o durante gestación.", fase: "Constitucional." },
+      { id: 302, nombre: "Mastitis", organo: "Glándulas mamarias", capa: "Endodermo", conflicto: "Preocupación por los hijos o nido.", fase: "Vagotónica (inflamación mamaria)." },
+      { id: 303, nombre: "Melancolía", organo: "Sistema límbico", capa: "Ectodermo", conflicto: "Pérdida prolongada o vacío existencial.", fase: "Simpaticotónica prolongada (tristeza y apatía)." },
+      { id: 304, nombre: "Melanoma", organo: "Piel (melanocitos)", capa: "Ectodermo", conflicto: "Mancha o agresión a la integridad personal.", fase: "Vagotónica (proliferación celular)." },
+      { id: 305, nombre: "Melanosis", organo: "Piel", capa: "Ectodermo", conflicto: "Identidad o de ocultamiento simbólico.", fase: "Vagotónica (hiperpigmentación)." },
+      { id: 306, nombre: "Meningioma", organo: "Meninges", capa: "Ectodermo", conflicto: "Protección mental o shock no digerido.", fase: "Vagotónica (tumor benigno en curación)." },
+      { id: 307, nombre: "Meningitis", organo: "Meninges", capa: "Ectodermo", conflicto: "Ataque o amenaza cerebral.", fase: "Vagotónica (inflamación meninge)." },
+      { id: 308, nombre: "Menopausia precoz", organo: "Ovarios", capa: "Mesodermo Nuevo", conflicto: "Pérdida de feminidad o del rol reproductivo.", fase: "Fase crónica (agotamiento ovárico)." },
+      { id: 309, nombre: "Menorragia", organo: "Útero", capa: "Endodermo", conflicto: "Pérdida afectiva o culpa reproductiva.", fase: "Vagotónica (sangrado excesivo en curación)." },
+      { id: 310, nombre: "Metrorragia", organo: "Útero", capa: "Endodermo", conflicto: "Pérdida o frustración sexual.", fase: "Vagotónica (sangrado uterino en reparación)." },
+      { id: 311, nombre: "Miastenia", organo: "Músculos voluntarios", capa: "Mesodermo Nuevo", conflicto: "Desvalorización motora.", fase: "Simpaticotónica (debilidad progresiva)." },
+      { id: 312, nombre: "Migraña", organo: "Cerebro / vasos", capa: "Ectodermo", conflicto: "Control o estrés mental extremo.", fase: "Vagotónica (dolor y congestión)." },
+      { id: 313, nombre: "Miocardio hipertrofiado", organo: "Corazón", capa: "Mesodermo Nuevo", conflicto: "Sobreesfuerzo afectivo o carga emocional.", fase: "Vagotónica (engrosamiento muscular)." },
+      { id: 314, nombre: "Miocarditis", organo: "Corazón (músculo)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización afectiva o emocional.", fase: "Vagotónica (inflamación del miocardio)." },
+      { id: 315, nombre: "Mioclonías", organo: "Sistema nervioso / músculo", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Sobresalto o alerta permanente.", fase: "Simpaticotónica (descargas reflejas)." },
+      { id: 316, nombre: "Miopatía", organo: "Músculos", capa: "Mesodermo Nuevo", conflicto: "Incapacidad o desvalorización del movimiento.", fase: "Simpaticotónica (degeneración muscular)." },
+      { id: 317, nombre: "Miopía", organo: "Ojos (cristalino/retina)", capa: "Ectodermo", conflicto: "Miedo a lo que viene (visión del futuro).", fase: "Fase crónica (adaptación activa)." },
+      { id: 318, nombre: "Miositis", organo: "Músculos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en la acción o el movimiento.", fase: "Vagotónica (inflamación muscular)." },
+
+      // N
+      { id: 319, nombre: "Narcolepsia", organo: "Sistema nervioso", capa: "Ectodermo", conflicto: "Evasión ante estrés o peligro emocional.", fase: "Simpaticotónica oscilante." },
+      { id: 320, nombre: "Necrosis", organo: "Tejidos varios", capa: "Variable", conflicto: "Separación absoluta o pérdida brutal.", fase: "Simpaticotónica (muerte celular)." },
+      { id: 321, nombre: "Nefritis", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Pérdida, desarraigo o liquidez emocional.", fase: "Vagotónica (inflamación renal)." },
+      { id: 322, nombre: "Nefrolitiasis", organo: "Riñones (cálices)", capa: "Mesodermo Antiguo", conflicto: "Pérdida territorial o duelo no expresado.", fase: "Fase crónica (formación de cálculos)." },
+      { id: 323, nombre: "Nefropatía diabética", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Desvalorización y toxicidad emocional crónica.", fase: "Fase crónica (degeneración renal)." },
+      { id: 324, nombre: "Nefrosis", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Abandono o pérdida de territorio.", fase: "Simpaticotónica (función reducida)." },
+      { id: 325, nombre: "Neoplasia", organo: "Variable", capa: "Variable", conflicto: "Conflicto no resuelto con posterior reparación celular.", fase: "Vagotónica (proliferación adaptativa)." },
+      { id: 326, nombre: "Neumonía", organo: "Pulmones (alvéolos)", capa: "Endodermo", conflicto: "Miedo a morir o pérdida de territorio.", fase: "Vagotónica (infección y reparación)." },
+      { id: 327, nombre: "Neuralgia", organo: "Nervios periféricos", capa: "Ectodermo", conflicto: "Separación dolorosa o pérdida de contacto.", fase: "Vagotónica (dolor nervioso en reparación)." },
+      { id: 328, nombre: "Neuralgia del trigémino", organo: "Nervio trigémino", capa: "Ectodermo", conflicto: "Contacto forzado o separación violenta facial.", fase: "Vagotónica (dolor agudo en reparación)." },
+      { id: 329, nombre: "Neurodermatitis", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación vivido con alta sensibilidad.", fase: "Vagotónica (picor y erupciones)." },
+      { id: 330, nombre: "Neuroma", organo: "Nervios", capa: "Ectodermo", conflicto: "Protección nerviosa tras trauma emocional.", fase: "Vagotónica (crecimiento nervioso)." },
+      { id: 331, nombre: "Neuromielitis óptica", organo: "Nervios ópticos y médula", capa: "Ectodermo", conflicto: "Miedo visual y pérdida de conexión vital.", fase: "Vagotónica (inflamación en curación)." },
+      { id: 332, nombre: "Neuropatía diabética", organo: "Nervios periféricos", capa: "Ectodermo", conflicto: "Desprotección crónica o anestesia emocional.", fase: "Fase crónica (degeneración nerviosa)." },
+      { id: 333, nombre: "Neuropatía periférica", organo: "Nervios periféricos", capa: "Ectodermo", conflicto: "Pérdida de contacto o sensibilidad emocional.", fase: "Simpaticotónica (degeneración activa)." },
+      { id: 334, nombre: "Neurosis obsesiva", organo: "Cerebro / conducta", capa: "Ectodermo", conflicto: "Culpa, control o miedo a perder el orden.", fase: "Simpaticotónica prolongada." },
+      { id: 335, nombre: "Neutropenia", organo: "Sangre (neutrófilos)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización inmune o agotamiento en defensa.", fase: "Simpaticotónica (neutrófilos bajos)." },
+      { id: 336, nombre: "Nistagmo", organo: "Músculos oculares", capa: "Mesodermo Nuevo", conflicto: "Inseguridad visual o falta de enfoque vital.", fase: "Simpaticotónica (movimiento involuntario)." },
+      { id: 337, nombre: "Nódulo vocal", organo: "Cuerdas vocales", capa: "Ectodermo", conflicto: "Expresión bloqueada o reprimida.", fase: "Vagotónica (nódulos adaptativos)." },
+      { id: 338, nombre: "Nodulitis tiroidea", organo: "Tiroides", capa: "Endodermo", conflicto: "No ser lo suficientemente rápido o eficaz.", fase: "Vagotónica (nódulos reparadores)." },
+
+      // O
+      { id: 339, nombre: "Obesidad", organo: "Tejido adiposo", capa: "Mesodermo Nuevo", conflicto: "Protección, carencia afectiva o desvalorización.", fase: "Vagotónica (acumulación de grasa adaptativa)." },
+      { id: 340, nombre: "Oclusión intestinal", organo: "Intestino delgado/grueso", capa: "Endodermo", conflicto: "No poder digerir una experiencia.", fase: "Vagotónica (detención de tránsito)." },
+      { id: 341, nombre: "Ojo seco", organo: "Glándulas lagrimales", capa: "Ectodermo", conflicto: "No poder expresar tristeza o bloqueo emocional.", fase: "Simpaticotónica (secreción reducida)." },
+      { id: 342, nombre: "Onicocriptosis (uña encarnada)", organo: "Uñas / dedos", capa: "Ectodermo", conflicto: "Separación y protección de una zona sensible.", fase: "Vagotónica (dolor e inflamación)." },
+      { id: 343, nombre: "Onicofagia", organo: "Uñas / dedos", capa: "Ectodermo", conflicto: "Ansiedad, represión o autocastigo.", fase: "Simpaticotónica (conducta compulsiva)." },
+      { id: 344, nombre: "Onicomicosis", organo: "Uñas", capa: "Ectodermo", conflicto: "Separación o desprotección en el contacto.", fase: "Vagotónica (infección en reparación)." },
+      { id: 345, nombre: "Orquitis", organo: "Testículos", capa: "Endodermo", conflicto: "Pérdida de identidad masculina o descendencia.", fase: "Vagotónica (inflamación testicular)." },
+      { id: 346, nombre: "Osteoartritis", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el movimiento.", fase: "Fase crónica (rigidez articular)." },
+      { id: 347, nombre: "Osteóitis", organo: "Hueso y cartílago", capa: "Mesodermo Nuevo", conflicto: "Desvalorización física o motora.", fase: "Vagotónica (inflamación por curación)." },
+      { id: 348, nombre: "Osteoedema", organo: "Hueso", capa: "Mesodermo Nuevo", conflicto: "Carga emocional sobre la estructura ósea.", fase: "Vagotónica (líquido en reparación)." },
+      { id: 349, nombre: "Osteoma", organo: "Huesos", capa: "Mesodermo Nuevo", conflicto: "Reparación tras desvalorización estructural.", fase: "Vagotónica (crecimiento benigno óseo)." },
+      { id: 350, nombre: "Osteomielitis", organo: "Hueso y médula ósea", capa: "Mesodermo Nuevo", conflicto: "Desvalorización estructural y dolor profundo.", fase: "Vagotónica (inflamación ósea aguda)." },
+      { id: 351, nombre: "Osteoporosis", organo: "Huesos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización profunda sostenida.", fase: "Simpaticotónica (pérdida de masa ósea)." },
+      { id: 352, nombre: "Osteosarcoma", organo: "Hueso", capa: "Mesodermo Nuevo", conflicto: "Desvalorización intensa y aguda.", fase: "Vagotónica (proliferación ósea reparadora)." },
+      { id: 353, nombre: "Otitis", organo: "Oído medio", capa: "Endodermo", conflicto: "No querer escuchar algo desagradable.", fase: "Vagotónica (inflamación y dolor)." },
+      { id: 354, nombre: "Otitis externa", organo: "Conducto auditivo externo", capa: "Ectodermo", conflicto: "Separación auditiva, rechazo a escuchar el entorno.", fase: "Vagotónica (inflamación externa)." },
+      { id: 355, nombre: "Otorragia", organo: "Oído", capa: "Ectodermo", conflicto: "Trauma auditivo agudo o agresión sonora.", fase: "Vagotónica (sangrado reparador)." },
+      { id: 356, nombre: "Ovario poliquístico", organo: "Ovarios", capa: "Endodermo", conflicto: "Frustración reproductiva o de maternidad.", fase: "Fase crónica (quistes adaptativos)." },
+      { id: 357, nombre: "Ovaritis", organo: "Ovarios", capa: "Endodermo", conflicto: "Sexual o de pérdida femenina.", fase: "Vagotónica (inflamación ovárica)." },
+
+      // P
+      { id: 358, nombre: "Pancreatitis", organo: "Páncreas", capa: "Endodermo", conflicto: "Pérdida familiar o ataque a la familia.", fase: "Vagotónica (inflamación aguda)." },
+      { id: 359, nombre: "Panofobia", organo: "Cerebro / emoción", capa: "Ectodermo", conflicto: "Miedo generalizado o hiperalerta existencial.", fase: "Simpaticotónica (hipervigilancia crónica)." },
+      { id: 360, nombre: "Pánico (ataques)", organo: "Sistema autónomo", capa: "Ectodermo", conflicto: "Miedo inesperado o sensación de muerte inminente.", fase: "Simpaticotónica aguda." },
+      { id: 361, nombre: "Paranoia", organo: "Cerebro / percepción", capa: "Ectodermo", conflicto: "Persecución o amenaza constante.", fase: "Simpaticotónica (sospecha continua)." },
+      { id: 362, nombre: "Parálisis cerebral", organo: "Sistema nervioso central", capa: "Ectodermo", conflicto: "Conflictos intrauterinos de movimiento o miedo.", fase: "Constitucional." },
+      { id: 363, nombre: "Parálisis facial", organo: "Nervio facial", capa: "Ectodermo", conflicto: "Cara amenazada o golpe simbólico.", fase: "Vagotónica (bloqueo nervioso)." },
+      { id: 364, nombre: "Parkinson", organo: "Sistema nervioso motor", capa: "Ectodermo", conflicto: "Querer moverse y no poder.", fase: "Simpaticotónica crónica." },
+      { id: 365, nombre: "Peritonitis", organo: "Peritoneo", capa: "Mesodermo Nuevo", conflicto: "Ataque al abdomen o miedo vital.", fase: "Vagotónica (inflamación peritoneal)." },
+      { id: 366, nombre: "Pielonefritis", organo: "Riñones (pelvis renal)", capa: "Mesodermo Antiguo", conflicto: "Pérdida o miedo relacionado con fluidos.", fase: "Vagotónica (inflamación renal)." },
+      { id: 367, nombre: "Pitiriasis", organo: "Piel", capa: "Ectodermo", conflicto: "Contacto leve o separación superficial.", fase: "Vagotónica (descamación)." },
+      { id: 368, nombre: "Poliartritis", organo: "Articulaciones múltiples", capa: "Mesodermo Nuevo", conflicto: "Desvalorización general en movimiento.", fase: "Vagotónica (inflamación múltiple)." },
+      { id: 369, nombre: "Poliomielitis", organo: "Médula espinal", capa: "Ectodermo", conflicto: "Motor severo, desvalorización por inmovilidad.", fase: "Vagotónica (parálisis en curación)." },
+      { id: 370, nombre: "Poliquistosis renal", organo: "Riñones", capa: "Endodermo", conflicto: "Desvalorización heredada o repetitiva.", fase: "Fase crónica (quistes renales)." },
+      { id: 371, nombre: "Pólipos nasales", organo: "Mucosa nasal", capa: "Endodermo", conflicto: "No poder oler un peligro o presencia.", fase: "Vagotónica (crecimiento mucoso)." },
+      { id: 372, nombre: "Prolapso uterino", organo: "Útero", capa: "Endodermo", conflicto: "Pérdida o desvalorización del rol femenino.", fase: "Fase crónica (descenso orgánico)." },
+      { id: 373, nombre: "Prostatitis", organo: "Próstata", capa: "Endodermo", conflicto: "Sexual o territorial masculino.", fase: "Vagotónica (inflamación prostática)." },
+      { id: 374, nombre: "Psoriasis", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación prolongada o ambivalente.", fase: "Fase crónica (placas cutáneas)." },
+      { id: 375, nombre: "Psicosis", organo: "Cerebro", capa: "Ectodermo", conflicto: "Pérdida de realidad o territorio extremo.", fase: "Simpaticotónica (desconexión)." },
+      { id: 376, nombre: "Pubertad precoz", organo: "Glándulas sexuales", capa: "Endodermo", conflicto: "Sexuales o de roles prematuros en infancia.", fase: "Simpaticotónica (activación hormonal)." },
+      { id: 377, nombre: "Púrpura", organo: "Vasos / piel", capa: "Mesodermo Nuevo", conflicto: "Agresión o trauma físico simbólico.", fase: "Vagotónica (hemorragias subcutáneas)." },
+
+      // Q
+      { id: 378, nombre: "Queratoacantoma", organo: "Piel", capa: "Ectodermo", conflicto: "Reparación excesiva tras separación.", fase: "Vagotónica (lesión elevada)." },
+      { id: 379, nombre: "Queratocele", organo: "Córnea", capa: "Ectodermo", conflicto: "Visión amenazada o deformada.", fase: "Fase crónica (protrusión corneal)." },
+      { id: 380, nombre: "Queratitis", organo: "Córnea", capa: "Ectodermo", conflicto: "Protección visual o visión alterada.", fase: "Vagotónica (inflamación de córnea)." },
+      { id: 381, nombre: "Queratitis herpética", organo: "Córnea", capa: "Ectodermo", conflicto: "Contacto visual con carga sexual o prohibida.", fase: "Vagotónica (inflamación)." },
+      { id: 382, nombre: "Queratocono", organo: "Córnea", capa: "Ectodermo", conflicto: "Visión crónico con distorsión de la realidad.", fase: "Fase crónica (deformación corneal)." },
+      { id: 383, nombre: "Queratodermia palmoplantar", organo: "Piel (palmas/plantas)", capa: "Ectodermo", conflicto: "Separación o rechazo del contacto con entorno.", fase: "Fase crónica (engrosamiento)." },
+      { id: 384, nombre: "Queratopatía", organo: "Córnea", capa: "Ectodermo", conflicto: "Visión borrosa del entorno o del futuro.", fase: "Vagotónica (inflamación corneal)." },
+      { id: 385, nombre: "Queratosis", organo: "Piel", capa: "Ectodermo", conflicto: "Separación o rechazo prolongado.", fase: "Fase crónica (engrosamiento)." },
+      { id: 386, nombre: "Queratosis actínica", organo: "Piel", capa: "Ectodermo", conflicto: "Exposición prolongada a ambiente hostil.", fase: "Fase crónica (hiperplasia)." },
+      { id: 387, nombre: "Queloide", organo: "Piel", capa: "Ectodermo", conflicto: "Reparación excesiva tras trauma cutáneo.", fase: "Vagotónica (cicatrización sobreelevada)." },
+      { id: 388, nombre: "Querubismo", organo: "Mandíbula", capa: "Mesodermo Nuevo", conflicto: "Familiar de silencio o expresión bloqueada.", fase: "Fase crónica (hiperplasia ósea)." },
+      { id: 389, nombre: "Querubismo mandibular", organo: "Mandíbula", capa: "Mesodermo Nuevo", conflicto: "Desvalorización hereditaria en la expresión oral.", fase: "Fase crónica (crecimiento óseo)." },
+      { id: 390, nombre: "Quiste aracnoideo", organo: "Cerebro (meninges)", capa: "Ectodermo", conflicto: "Protección del sistema nervioso frente a trauma.", fase: "Vagotónica (líquido cefalorraquídeo)." },
+      { id: 391, nombre: "Quiste de Baker", organo: "Rodilla", capa: "Mesodermo Nuevo", conflicto: "Sobrecarga o desvalorización en el movimiento.", fase: "Vagotónica (acumulación articular)." },
+      { id: 392, nombre: "Quiste mamario", organo: "Glándula mamaria", capa: "Endodermo", conflicto: "Preocupación por el nido o seres queridos.", fase: "Vagotónica (acumulación líquida)." },
+      { id: 393, nombre: "Quiste ovárico", organo: "Ovarios", capa: "Endodermo", conflicto: "Pérdida simbólica de un hijo o pareja.", fase: "Vagotónica (quiste de reserva)." },
+      { id: 394, nombre: "Quiste renal", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Pérdida o territorio con impacto profundo.", fase: "Fase crónica (cicatriz biológica)." },
+      { id: 395, nombre: "Quiste sebáceo", organo: "Piel (sebáceas)", capa: "Ectodermo", conflicto: "Protección ante un contacto traumático.", fase: "Vagotónica (grasa encapsulada)." },
+      { id: 396, nombre: "Quiste sinovial", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización leve del movimiento.", fase: "Vagotónica (líquido reparador)." },
+      { id: 397, nombre: "Quiste tiroideo", organo: "Tiroides", capa: "Endodermo", conflicto: "No ser lo bastante rápido ante una amenaza.", fase: "Vagotónica (líquido adaptativo)." },
+
+      // R
+      { id: 398, nombre: "Rabdomiolisis", organo: "Músculo esquelético", capa: "Mesodermo Nuevo", conflicto: "Rendimiento extremo o desvalorización súbita.", fase: "Simpaticotónica (destrucción muscular)." },
+      { id: 399, nombre: "Raquitismo", organo: "Huesos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización estructural prolongada.", fase: "Fase crónica (debilitamiento óseo)." },
+      { id: 400, nombre: "Rash cutáneo", organo: "Piel", capa: "Ectodermo", conflicto: "Contacto no deseado o separación reciente.", fase: "Vagotónica (erupción cutánea)." },
+      { id: 401, nombre: "Rectitis", organo: "Recto", capa: "Endodermo", conflicto: "Suciedad simbólica o invasión territorial.", fase: "Vagotónica (inflamación rectal)." },
+      { id: 402, nombre: "Rectocele", organo: "Recto", capa: "Endodermo", conflicto: "Desvalorización del rol sexual o expulsión bloqueada.", fase: "Fase crónica (protrusión adaptativa)." },
+      { id: 403, nombre: "Reflujo gastroesofágico", organo: "Esófago y estómago", capa: "Endodermo", conflicto: "No poder digerir una experiencia amarga.", fase: "Fase crónica (acidez por defensa)." },
+      { id: 404, nombre: "Resfriado común", organo: "Nariz, garganta, bronquios", capa: "Endodermo / Ectodermo", conflicto: "Separación leve, frustración o sobreexposición.", fase: "Vagotónica (secreción y fiebre)." },
+      { id: 405, nombre: "Reticulocitosis", organo: "Médula ósea", capa: "Mesodermo Nuevo", conflicto: "Urgencia por transporte vital o rendimiento sanguíneo.", fase: "Vagotónica (incremento de reticulocitos)." },
+      { id: 406, nombre: "Retención de líquidos", organo: "Tejido conectivo / riñones", capa: "Mesodermo Antiguo", conflicto: "Desprotección o amenaza a la integridad.", fase: "Vagotónica (acumulación líquida)." },
+      { id: 407, nombre: "Retención urinaria", organo: "Vejiga", capa: "Mesodermo Antiguo", conflicto: "Territorial o miedo a perder el control.", fase: "Simpaticotónica (cierre del esfínter)." },
+      { id: 408, nombre: "Retinitis", organo: "Retina", capa: "Ectodermo", conflicto: "Miedo al futuro o no querer ver.", fase: "Vagotónica (inflamación ocular)." },
+      { id: 409, nombre: "Retinopatía diabética", organo: "Retina", capa: "Ectodermo", conflicto: "Visión borrosa del futuro por miedo crónico.", fase: "Vagotónica crónica (degeneración)." },
+      { id: 410, nombre: "Rigidez muscular", organo: "Músculos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización motora o resistencia a actuar.", fase: "Simpaticotónica (hipertonía muscular)." },
+      { id: 411, nombre: "Rinitis", organo: "Mucosa nasal", capa: "Endodermo", conflicto: "Olor desagradable o amenaza en el territorio.", fase: "Vagotónica (secreción nasal)." },
+      { id: 412, nombre: "Rinitis alérgica", organo: "Mucosa nasal", capa: "Endodermo / Ectodermo", conflicto: "Rechazo a estímulos simbólicos (entorno).", fase: "Vagotónica (inflamación y secreción)." },
+      { id: 413, nombre: "Rinofaringitis", organo: "Nariz y faringe", capa: "Endodermo / Ectodermo", conflicto: "Separación o dificultad para 'tragar' la situación.", fase: "Vagotónica (inflamación adaptativa)." },
+      { id: 414, nombre: "Rosácea", organo: "Piel del rostro", capa: "Ectodermo", conflicto: "Vergüenza, exposición o agresión estética.", fase: "Vagotónica (enrojecimiento del rostro)." },
+      { id: 415, nombre: "Rubeola", organo: "Piel / sistema inmune", capa: "Ectodermo", conflicto: "Separación leve con adaptación social.", fase: "Vagotónica (erupción y fiebre)." },
+      { id: 416, nombre: "Ruptura de ligamentos", organo: "Ligamentos", capa: "Mesodermo Nuevo", conflicto: "Desvalorización frente a flexibilidad o movimiento.", fase: "Simpaticotónica aguda (daño estructural)." },
+      { id: 417, nombre: "Ruptura de meniscos", organo: "Meniscos (rodilla)", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en la dirección o avance vital.", fase: "Simpaticotónica (ruptura por crisis)." },
+
+      // S
+      { id: 418, nombre: "Sarampión", organo: "Piel / sistema inmune", capa: "Ectodermo", conflicto: "Separación reciente y necesidad de contacto.", fase: "Vagotónica (erupción y fiebre)." },
+      { id: 419, nombre: "Seborrea", organo: "Glándulas sebáceas", capa: "Ectodermo", conflicto: "Contacto no deseado o separación afectiva.", fase: "Vagotónica (grasa compensatoria)." },
+      { id: 420, nombre: "Sepsis", organo: "Sangre y sistema inmune", capa: "Mesodermo Nuevo", conflicto: "Ataque masivo o invasión tóxica simbólica.", fase: "Vagotónica (respuesta biológica extrema)." },
+      { id: 421, nombre: "Sífilis", organo: "Sistema genital", capa: "Endodermo", conflicto: "Culpa sexual o contacto impuro.", fase: "Vagotónica (ulceración genital)." },
+      { id: 422, nombre: "Síncope", organo: "Cardiovascular", capa: "Mesodermo Nuevo", conflicto: "Choque vital o sobrecarga emocional súbita.", fase: "Simpaticotónica (pérdida de conciencia)." },
+      { id: 423, nombre: "Síndrome de abstinencia", organo: "Sistema nervioso", capa: "Ectodermo", conflicto: "Pérdida abrupta de apoyo o recurso esencial.", fase: "Simpaticotónica (ansiedad y agitación)." },
+      { id: 424, nombre: "Síndrome de Cushing", organo: "Suprarrenales", capa: "Endodermo", conflicto: "Estrés prolongado, sobreexigencia o ataque.", fase: "Simpaticotónica crónica (hipercortisolismo)." },
+      { id: 425, nombre: "Síndrome de Down", organo: "Multiorgánico", capa: "Multiorgánico", conflicto: "Programa transgeneracional de protección.", fase: "Constitucional." },
+      { id: 426, nombre: "Síndrome de fatiga crónica", organo: "Nervioso / muscular", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Agotamiento simbólico por sobreexigencia mental.", fase: "Vagotónica prolongada (cansancio)." },
+      { id: 427, nombre: "Síndrome de piernas inquietas", organo: "Músculos de las piernas", capa: "Mesodermo Nuevo", conflicto: "Movimiento bloqueado o frustración territorial.", fase: "Simpaticotónica (descargas motoras)." },
+      { id: 428, nombre: "Síndrome de Raynaud", organo: "Vasos periféricos", capa: "Mesodermo Nuevo", conflicto: "Frío emocional o retraimiento extremo.", fase: "Simpaticotónica (vasoconstricción)." },
+      { id: 429, nombre: "Síndrome de Tourette", organo: "Cerebro motor", capa: "Ectodermo", conflicto: "Motores repetitivos con componente de control.", fase: "Simpaticotónica crónica (tics)." },
+      { id: 430, nombre: "Síndrome del túnel carpiano", organo: "Nervio mediano", capa: "Ectodermo", conflicto: "Desempeño manual forzado o repetitivo.", fase: "Vagotónica (inflamación compresiva)." },
+      { id: 431, nombre: "Síndrome metabólico", organo: "Endocrino / vascular", capa: "Mesodermo Nuevo / Endodermo", conflicto: "Sobrevivencia, azúcar y presión combinados.", fase: "Fase crónica (activación adaptativa)." },
+      { id: 432, nombre: "Síndrome nefrótico", organo: "Riñones", capa: "Mesodermo Antiguo", conflicto: "Pérdida o desprotección filtrada.", fase: "Vagotónica (pérdida de proteínas)." },
+      { id: 433, nombre: "Síndrome premenstrual", organo: "Útero, ovarios", capa: "Endodermo", conflicto: "Rechazo, frustración o sexualidad contenida.", fase: "Cíclica (fase premenstrual)." },
+      { id: 434, nombre: "Sinusitis", organo: "Senos paranasales", capa: "Endodermo", conflicto: "Mal olor simbólico o ambiente desagradable.", fase: "Vagotónica (inflamación y congestión)." },
+      { id: 435, nombre: "Siringomielia", organo: "Médula espinal", capa: "Ectodermo", conflicto: "Desvalorización motora o movilidad interiorizada.", fase: "Fase crónica (cavidades medulares)." },
+      { id: 436, nombre: "Sordera", organo: "Oído interno", capa: "Ectodermo", conflicto: "No querer escuchar una verdad o situación.", fase: "Fase crónica (pérdida auditiva)." },
+
+      // T
+      { id: 437, nombre: "Tabaquismo", organo: "Pulmones / respiratorio", capa: "Endodermo", conflicto: "Control territorial o espacio vital simbólico.", fase: "Fase crónica (uso compensatorio)." },
+      { id: 438, nombre: "Taquicardia", organo: "Corazón (miocardio)", capa: "Mesodermo Nuevo", conflicto: "Urgencia o estrés por supervivencia inmediata.", fase: "Simpaticotónica (aceleración cardíaca)." },
+      { id: 439, nombre: "Tendinitis", organo: "Tendones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por acción forzada o repetida.", fase: "Vagotónica (inflamación tendinosa)." },
+      { id: 440, nombre: "Teniasis", organo: "Intestino delgado", capa: "Endodermo", conflicto: "Invasión simbólica o no poder digerir.", fase: "Fase crónica (parásitos en biología)." },
+      { id: 441, nombre: "Tics nerviosos", organo: "Sistema nervioso motor", capa: "Ectodermo", conflicto: "Expresión contenida o impulsividad bloqueada.", fase: "Simpaticotónica (descarga involuntaria)." },
+      { id: 442, nombre: "Tinnitus", organo: "Oído interno", capa: "Ectodermo", conflicto: "Sonido inesperado o amenaza sonora.", fase: "Fase crónica (percepción zumbido)." },
+      { id: 443, nombre: "Tiña", organo: "Piel", capa: "Ectodermo", conflicto: "Suciedad o contacto indeseado.", fase: "Vagotónica (lesión cutánea)." },
+      { id: 444, nombre: "Tiroiditis", organo: "Tiroides", capa: "Endodermo", conflicto: "No haber reaccionado a tiempo.", fase: "Vagotónica (inflamación adaptativa)." },
+      { id: 445, nombre: "Tortícolis", organo: "Músculos del cuello", capa: "Mesodermo Nuevo", conflicto: "Rigidez frente a una situación difícil de aceptar.", fase: "Simpaticotónica (contractura refleja)." },
+      { id: 446, nombre: "Tos crónica", organo: "Bronquios", capa: "Endodermo", conflicto: "Territorio invadido o miedo a perder espacio.", fase: "Vagotónica (tos de limpieza)." },
+      { id: 447, nombre: "Trastorno bipolar", organo: "Sistema nervioso central", capa: "Ectodermo", conflicto: "Alternancia de conflictos de pérdida y euforia.", fase: "Cíclica (oscilación bipolar)." },
+      { id: 448, nombre: "Trastorno de ansiedad", organo: "Sistema nervioso", capa: "Ectodermo", conflicto: "Miedo constante al futuro.", fase: "Simpaticotónica (hiperactivación)." },
+      { id: 449, nombre: "Trastorno de identidad disociativa", organo: "Cerebro límbico", capa: "Ectodermo", conflicto: "Fragmentación por trauma extremo o abuso.", fase: "Fase crónica (disociación defensiva)." },
+      { id: 450, nombre: "Trastorno de pánico", organo: "Nervioso y cardíaco", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Muerte inminente simbólica o amenaza súbita.", fase: "Simpaticotónica (crisis de miedo)." },
+      { id: 451, nombre: "Trastorno del espectro autista", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Desconexión del entorno o protección emocional.", fase: "Constitucional." },
+      { id: 452, nombre: "Trastorno TDAH", organo: "Corteza frontal", capa: "Ectodermo", conflicto: "Desconexión o rechazo a estructuras impuestas.", fase: "Simpaticotónica (hiperactividad)." },
+      { id: 453, nombre: "Trastorno TOC", organo: "Corteza cerebral", capa: "Ectodermo", conflicto: "Control y necesidad de reparar errores.", fase: "Fase crónica (compulsión repetitiva)." },
+      { id: 454, nombre: "Trombocitopenia", organo: "Sangre (plaquetas)", capa: "Mesodermo Nuevo", conflicto: "Ataque o heridas abiertas simbólicas.", fase: "Vagotónica (plaquetas bajas)." },
+      { id: 455, nombre: "Trombosis", organo: "Vasos sanguíneos", capa: "Mesodermo Nuevo", conflicto: "Estancamiento vital o emocional.", fase: "Simpaticotónica (coagulación)." },
+      { id: 456, nombre: "Tuberculosis pulmonar", organo: "Pulmones (alvéolos)", capa: "Endodermo", conflicto: "Miedo a morir o separación profunda.", fase: "Vagotónica (necrosis y bacilos)." },
+
+      // U
+      { id: 457, nombre: "Úlcera bucal", organo: "Mucosa bucal", capa: "Endodermo", conflicto: "No poder decir algo o agresión verbal.", fase: "Vagotónica (llagas en resolución)." },
+      { id: 458, nombre: "Úlcera corneal", organo: "Córnea", capa: "Ectodermo", conflicto: "Algo que se ve como agresión o daño visual.", fase: "Simpaticotónica (lesión activa)." },
+      { id: 459, nombre: "Úlcera duodenal", organo: "Duodeno", capa: "Endodermo", conflicto: "No poder digerir una injusticia.", fase: "Simpaticotónica (desgaste de mucosa)." },
+      { id: 460, nombre: "Úlcera esofágica", organo: "Esófago", capa: "Endodermo", conflicto: "Tragar algo amargo simbólicamente.", fase: "Simpaticotónica (desgaste epitelial)." },
+      { id: 461, nombre: "Úlcera gástrica", organo: "Estómago", capa: "Endodermo", conflicto: "No poder digerir una situación o persona.", fase: "Simpaticotónica (erosión gástrica)." },
+      { id: 462, nombre: "Úlcera por presión", organo: "Piel", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por inmovilidad o abandono.", fase: "Vagotónica (necrosis por abandono)." },
+      { id: 463, nombre: "Úlcera rectal", organo: "Recto", capa: "Ectodermo", conflicto: "Suciedad, traición o desvalorización anal.", fase: "Simpaticotónica (lesión activa)." },
+      { id: 464, nombre: "Úlcera varicosa", organo: "Piel y venas", capa: "Mesodermo Nuevo", conflicto: "Desvalorización con carga y lentitud para avanzar.", fase: "Vagotónica (lesión en reparación)." },
+      { id: 465, nombre: "Uretritis", organo: "Uretra", capa: "Endodermo", conflicto: "Marcado territorial o experiencia sexual sucia.", fase: "Vagotónica (ardor e inflamación)." },
+      { id: 466, nombre: "Uretritis gonocócica", organo: "Uretra", capa: "Endodermo", conflicto: "Sexual vivido como invasión o agresión.", fase: "Vagotónica (infección y ardor)." },
+      { id: 467, nombre: "Uretritis intersticial", organo: "Uretra", capa: "Endodermo", conflicto: "Irritación sexual constante o invasión.", fase: "Vagotónica (inflamación crónica)." },
+      { id: 468, nombre: "Uretrorragia", organo: "Uretra", capa: "Endodermo", conflicto: "Marcado sexual o agresión íntima.", fase: "Vagotónica (sangrado en reparación)." },
+      { id: 469, nombre: "Urolitiasis", organo: "Riñones y vías urinarias", capa: "Mesodermo Antiguo", conflicto: "Pérdida territorial o de líquidos vitales.", fase: "Fase crónica (formación de cálculos)." },
+      { id: 470, nombre: "Uropatía obstructiva", organo: "Vías urinarias", capa: "Mesodermo Antiguo", conflicto: "Detener un flujo vital, emocional o territorial.", fase: "Simpaticotónica (obstrucción adaptativa)." },
+      { id: 471, nombre: "Urticaria", organo: "Piel (dermis)", capa: "Ectodermo", conflicto: "Separación o contacto no deseado.", fase: "Vagotónica (lesión cutánea)." },
+      { id: 472, nombre: "Urticaria crónica", organo: "Piel", capa: "Ectodermo", conflicto: "Separación repetida no resuelta.", fase: "Vagotónica cíclica (brotes)." },
+      { id: 473, nombre: "Urticaria solar", organo: "Piel", capa: "Ectodermo", conflicto: "Rechazo a una exposición no deseada.", fase: "Vagotónica (erupción post contacto)." },
+      { id: 474, nombre: "Útero inflamado", organo: "Útero", capa: "Endodermo", conflicto: "Frustración sexual o procreativa.", fase: "Vagotónica (inflamación)." },
+      { id: 475, nombre: "Uveítis", organo: "Ojo (úvea)", capa: "Ectodermo", conflicto: "Visión distorsionada o evitar ver algo.", fase: "Vagotónica (inflamación ocular)." },
+      { id: 476, nombre: "Uveítis anterior", organo: "Ojo (úvea anterior)", capa: "Ectodermo", conflicto: "No querer ver el presente cercano.", fase: "Vagotónica (inflamación anterior)." },
+
+      // V
+      { id: 477, nombre: "Vaginitis", organo: "Vagina", capa: "Endodermo", conflicto: "Contacto sexual vivido como sucio o violento.", fase: "Vagotónica (inflamación reparadora)." },
+      { id: 478, nombre: "Vaginismo", organo: "Músculos vaginales", capa: "Mesodermo Nuevo", conflicto: "Miedo a la penetración o trauma sexual.", fase: "Simpaticotónica (contracción)." },
+      { id: 479, nombre: "Vaginoplastia (post)", organo: "Vagina", capa: "Mesodermo Nuevo", conflicto: "Identidad y sexualidad reconstruida.", fase: "Vagotónica (reparación física)." },
+      { id: 480, nombre: "Vaginosis bacteriana", organo: "Vagina", capa: "Endodermo", conflicto: "Invasión o agresión sexual simbólica.", fase: "Vagotónica (desequilibrio de flora)." },
+      { id: 481, nombre: "Varicela", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación reciente o deseo de contacto.", fase: "Vagotónica (erupciones cutáneas)." },
+      { id: 482, nombre: "Varicocele", organo: "Venas del escroto", capa: "Mesodermo Nuevo", conflicto: "Desvalorización sexual masculina.", fase: "Vagotónica (dilatación venosa)." },
+      { id: 483, nombre: "Várices", organo: "Venas", capa: "Mesodermo Nuevo", conflicto: "Desvalorización en el camino o sobrecarga.", fase: "Vagotónica (dilatación venosa)." },
+      { id: 484, nombre: "Vasculitis", organo: "Vasos sanguíneos", capa: "Mesodermo Nuevo", conflicto: "Ataque al sistema de circulación vital.", fase: "Vagotónica (inflamación vascular)." },
+      { id: 485, nombre: "Verrugas", organo: "Piel", capa: "Ectodermo", conflicto: "Desvalorización estética o contacto indeseado.", fase: "Vagotónica (hiperplasia cutánea)." },
+      { id: 486, nombre: "Vértigo", organo: "Oído interno", capa: "Ectodermo", conflicto: "Pérdida de referencia o equilibrio simbólico.", fase: "Vagotónica (desorientación)." },
+      { id: 487, nombre: "Vesícula con cálculos", organo: "Vesícula biliar", capa: "Endodermo", conflicto: "Ira no digerida o contenida.", fase: "Fase crónica (formación de piedras)." },
+      { id: 488, nombre: "Vesícula inflamada", organo: "Vesícula biliar", capa: "Endodermo", conflicto: "Agresividad contenida o injusticia.", fase: "Vagotónica (colecistitis)." },
+      { id: 489, nombre: "Vesículas genitales (herpes)", organo: "Mucosa genital", capa: "Ectodermo", conflicto: "Separación íntima o contacto sucio.", fase: "Vagotónica (ampollas genitales)." },
+      { id: 490, nombre: "Vesículas orales", organo: "Mucosa bucal", capa: "Endodermo", conflicto: "Agresión verbal, no poder decir algo.", fase: "Vagotónica (ampollas en la boca)." },
+      { id: 491, nombre: "Virus del Papiloma Humano (VPH)", organo: "Cuello uterino", capa: "Endodermo", conflicto: "Contacto sexual con culpa o suciedad.", fase: "Vagotónica (proliferación celular)." },
+      { id: 492, nombre: "Vitíligo", organo: "Piel (melanocitos)", capa: "Ectodermo", conflicto: "Separación vivido como intenso y dramático.", fase: "Fase crónica (pérdida de pigmento)." },
+      { id: 493, nombre: "Vocalización alterada", organo: "Cuerdas vocales", capa: "Ectodermo", conflicto: "No poder expresarse o ser escuchado.", fase: "Simpaticotónica o Vagotónica." },
+      { id: 494, nombre: "Vómito crónico", organo: "Estómago", capa: "Endodermo", conflicto: "Rechazo de una situación imposible de digerir.", fase: "Simpaticotónica (expulsión activa)." },
+      { id: 495, nombre: "Vulvitis", organo: "Vulva", capa: "Endodermo", conflicto: "Sexual vivido con agresión simbólica.", fase: "Vagotónica (inflamación vulvar)." },
+      { id: 496, nombre: "Vulvodinia", organo: "Vulva", capa: "Endodermo", conflicto: "Humillación o rechazo sexual.", fase: "Vagotónica (dolor en la zona)." },
+
+      // W
+      { id: 497, nombre: "Warts (verrugas VPH)", organo: "Piel", capa: "Ectodermo", conflicto: "Estético o de contacto no deseado genital.", fase: "Vagotónica (hiperplasia epidérmica)." },
+      { id: 498, nombre: "Wegener (granulomatosis)", organo: "Vasos y respiratorio", capa: "Mesodermo Nuevo", conflicto: "Ataque múltiple o autodestrucción.", fase: "Vagotónica (granulomas en curación)." },
+      { id: 499, nombre: "Wernicke (encefalopatía)", organo: "Tronco encefálico", capa: "Endodermo", conflicto: "Desnutrición prolongada, desorientación vital.", fase: "Simpaticotónica (deterioro neurocognitivo)." },
+      { id: 500, nombre: "Wilson (enfermedad de)", organo: "Hígado y sistema nervioso", capa: "Endodermo / Ectodermo", conflicto: "Envenenamiento simbólico o herencia tóxica.", fase: "Fase crónica (acumulación de cobre)." },
+      { id: 501, nombre: "Wiskott-Aldrich (síndrome)", organo: "Sistema inmune / piel", capa: "Ectodermo / Mesodermo Nuevo", conflicto: "Rechazo genético o inmunológico del clan.", fase: "Constitucional." },
+
+      // X
+      { id: 502, nombre: "Xantoma", organo: "Piel y tejido graso", capa: "Mesodermo Nuevo", conflicto: "Acumulación simbólica de protección o exceso.", fase: "Vagotónica (depósitos lípidos)." },
+      { id: 503, nombre: "Xerosis cutánea", organo: "Piel (epidermis)", capa: "Ectodermo", conflicto: "Separación prolongada o falta de afecto.", fase: "Vagotónica (resequedad cutánea)." },
+      { id: 504, nombre: "Xerostomía", organo: "Glándulas salivales", capa: "Endodermo", conflicto: "No poder saborear algo o sequedad relacional.", fase: "Simpaticotónica (saliva reducida)." },
+
+      // Y
+      { id: 505, nombre: "Yersiniosis", organo: "Intestino delgado / linfático", capa: "Endodermo", conflicto: "Suciedad interior, invasión por algo indeseado.", fase: "Vagotónica (diarrea e inflamación)." },
+      { id: 506, nombre: "Yeyunitis", organo: "Yeyuno", capa: "Endodermo", conflicto: "Absorción, no poder integrar algo vital.", fase: "Vagotónica (inflamación intestinal)." },
+      { id: 507, nombre: "Yodo (intoxicación)", organo: "Tiroides", capa: "Endodermo", conflicto: "Exceso de control e hiperactividad.", fase: "Simpaticotónica (hiperfunción tiroidea)." },
+
+      // Z
+      { id: 508, nombre: "Zika (virus)", organo: "Sistema nervioso / piel", capa: "Ectodermo", conflicto: "Contacto contaminante o miedo en el embarazo.", fase: "Vagotónica (fiebre y erupción)." },
+      { id: 509, nombre: "Zollinger-Ellison", organo: "Estómago y duodeno", capa: "Endodermo", conflicto: "No poder digerir una situación constante y ácida.", fase: "Simpaticotónica (ácido gástrico en exceso)." },
+      { id: 510, nombre: "Zona (herpes zóster)", organo: "Piel y nervios", capa: "Ectodermo", conflicto: "Separación brutal y altamente estresante.", fase: "Vagotónica (ampollas dolorosas)." }
+    ];
+
+    // DATOS EDUCATIVOS DE LAS 5 LEYES BIOLÓGICAS
+    const LEYES_BIOLOGICAS_DATOS = [
+      {
+        numero: "1ª LEY",
+        titulo: "La Ley de Hierro de la Biología",
+        subtitulo: "El Origen: El Impacto Emocional (Bioshock)",
+        enunciado: "Todo Programa Biológico Especial (DHS) se activa a partir de un choque emocional imprevisto, vivido en aislamiento y sin solución inmediata.",
+        aplicacion: "En consulta no buscamos el estrés diario común, sino el instante exacto del 'Bioshock'. Identificar ese momento imprevisto nos permite desarmar la carga emocional que el sistema nervioso dejó atrapada en el cuerpo."
+      },
+      {
+        numero: "2ª LEY",
+        titulo: "Carácter Bifásico de los Programas Biológicos",
+        subtitulo: "Fase Activa (Simpaticotonía) y Fase de Reparación (Vagotónica)",
+        enunciado: "Todo proceso biológico consta de dos fases: una activa de estrés y una de solución o reparación (siempre que el conflicto se resuelva).",
+        aplicacion: "Le permite al consultante entender en qué fase está su síntoma. Muchos dolores, inflamaciones o infecciones no son la 'enfermedad empeorando', sino la fase de reparación de su cuerpo. Esto elimina el pánico al diagnóstico."
+      },
+      {
+        numero: "3ª LEY",
+        titulo: "Sistema Ontogenético de los Programas Biológicos",
+        subtitulo: "Capas Embrionarias y Lógica Cerebro-Órgano",
+        enunciado: "Cada tejido del cuerpo responde según su capa embrionaria de origen (Endodermo, Mesodermo o Ectodermo) regulada por un área del cerebro.",
+        aplicacion: "Nos da la precisión para saber el tipo de vivencia exacta. El Endodermo responde a supervivencia o 'bocados indigeribles', el Mesodermo a desvalorización estructural y el Ectodermo a separación o invasión del territorio."
+      },
+      {
+        numero: "4ª LEY",
+        titulo: "Sistema Ontogenético de los Microbios",
+        subtitulo: "Microbios como Aliados de la Reparación",
+        enunciado: "Los microorganismos (bacterias, hongos, virus) no destruyen al cuerpo; actúan como limpiadores y restauradores en la fase de reparación.",
+        aplicacion: "Transforma la mirada del consultante: deja de ver al síntoma o la infección como una invasión enemiga y comprende el trabajo biológico de limpieza que está haciendo su propio organismo."
+      },
+      {
+        numero: "5ª LEY",
+        titulo: "La Quintaesencia (Comprensión Biológica)",
+        subtitulo: "El Sentido Biológico Adaptativo del Síntoma",
+        enunciado: "Toda 'enfermedad' es en realidad un Programa Biológico Especial creado por la naturaleza para ayudar al organismo a sobrevivir a una crisis.",
+        aplicacion: "Es la clave fundamental de Camino Al Inconsciente: entender que el cuerpo NUNCA se equivoca. El síntoma es la mejor respuesta biológica que tu inconsciente encontró ante una emoción que no pudiste gestionar en su momento."
+      }
     ];
 
     function App() {
-      // Pestaña 1 = Escáner Bioemocional (Primero), Pestaña 2 = Diccionario PES
-      const [tab, setTab] = useState('escaner');
+      // PESTAÑAS: 'leyes' -> 'diccionario' -> 'escaner'
+      const [tab, setTab] = useState('leyes');
 
+      // Estado del Escáner
       const [paso, setPaso] = useState(1);
       const [sintoma, setSintoma] = useState('');
       const [tiempo, setTiempo] = useState('1 a 6 meses');
@@ -184,13 +755,16 @@
       const [repetitivo, setRepetitivo] = useState('Sí');
       const [compromiso, setCompromiso] = useState(8);
 
+      // Estado del Diccionario
       const [busqueda, setBusqueda] = useState('');
       const [capaFiltro, setCapaFiltro] = useState('TODAS');
       const [paginaActual, setPaginaActual] = useState(1);
-      const itemsPorPagina = 6;
+      const itemsPorPagina = 10;
 
       const PHONE_NUMBER = "56990229732";
+      const WEBSITE_URL = "https://caminoalinconsciente.cl/";
 
+      // Persistencia en LocalStorage
       useEffect(() => {
         const savedSintoma = localStorage.getItem('camino_sintoma');
         if (savedSintoma) setSintoma(savedSintoma);
@@ -208,6 +782,7 @@
         return Math.min(score, 100);
       }, [intensidad, evento, compromiso]);
 
+      // Filtro del Diccionario A-Z
       const listaFiltrada = useMemo(() => {
         return BANCO_PES.filter(item => {
           const coincideTexto = item.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
@@ -253,36 +828,236 @@
           
           {/* Header con el Logo Oficial */}
           <header className="mb-8 flex flex-col items-center">
-            <a href="https://caminoalinconsciente.cl/" target="_blank" rel="noopener noreferrer" className="transition-transform hover:scale-105">
+            <a href={WEBSITE_URL} target="_blank" rel="noopener noreferrer" className="transition-transform hover:scale-105">
               <CaminoLogo className="w-full max-w-md" />
             </a>
           </header>
 
-          {/* Navegación Principal: Pestaña 1 Escáner, Pestaña 2 Diccionario */}
-          <div className="flex justify-center mb-8 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 max-w-md mx-auto shadow-lg">
+          {/* Navegación Principal con el nuevo Botón al Sitio Web al FINAL */}
+          <div className="flex flex-wrap justify-center mb-8 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 max-w-2xl mx-auto shadow-lg gap-1">
             <button
-              onClick={() => setTab('escaner')}
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
-                tab === 'escaner'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20'
+              onClick={() => setTab('leyes')}
+              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                tab === 'leyes'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <span>✨</span> Escáner Bioemocional
+              <span>🧬</span> 5 Leyes
             </button>
             <button
               onClick={() => setTab('diccionario')}
-              className={`flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
+              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 tab === 'diccionario'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <span>📖</span> Diccionario PES
+              <span>📖</span> Diccionario
             </button>
+            <button
+              onClick={() => setTab('escaner')}
+              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                tab === 'escaner'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <span>✨</span> Escáner
+            </button>
+            <a
+              href={WEBSITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-amber-300 border border-slate-700/80 shadow-md"
+            >
+              <span>🌐</span> Sitio Web
+            </a>
           </div>
 
-          {/* PESTAÑA 1: ESCÁNER BIOEMOCIONAL */}
+          {/* PESTAÑA 1: LAS 5 LEYES BIOLÓGICAS */}
+          {tab === 'leyes' && (
+            <div className="space-y-6">
+              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm space-y-4">
+                <span className="text-xs font-bold tracking-widest text-amber-400/90 uppercase block">
+                  Fundamento Científico y Biológico
+                </span>
+                <h2 className="text-2xl font-cinzel font-bold text-amber-400">
+                  ¿Cómo Usamos las 5 Leyes Biológicas en Biodescodificación?
+                </h2>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Las 5 Leyes Biológicas demuestran que lo que llamamos "enfermedad" no es un error de la naturaleza ni una falla azarosa de tu cuerpo, sino un <strong className="text-amber-300">Programa Biológico Especial con Pleno Sentido Adaptativo</strong>. En nuestras sesiones privadas aplicamos estas leyes para descifrar el mensaje inconsciente de tu biología.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {LEYES_BIOLOGICAS_DATOS.map((ley, idx) => (
+                  <div key={idx} className="bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 rounded-2xl p-6 space-y-3 transition-all">
+                    <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                      <span className="text-xs font-bold uppercase px-3 py-1 bg-amber-500/10 text-amber-400 rounded-lg border border-amber-500/20">
+                        {ley.numero}
+                      </span>
+                      <span className="text-xs font-medium text-slate-500">
+                        Ley Biológica #{idx + 1}
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-bold text-amber-400">{ley.titulo}</h3>
+                      <p className="text-xs font-semibold text-slate-300 mt-0.5">{ley.subtitulo}</p>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-slate-300 italic bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/60 leading-relaxed">
+                      "{ley.enunciado}"
+                    </p>
+
+                    <div className="pt-2">
+                      <strong className="text-xs font-bold text-amber-400/90 uppercase tracking-wider block mb-1">
+                        👉 Aplicación Práctica en la Sesión:
+                      </strong>
+                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        {ley.aplicacion}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-slate-950 border border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center space-y-4 shadow-xl">
+                <h3 className="text-xl font-cinzel font-bold text-amber-400">
+                  Comprender la Lógica de Tu Cuerpo es el Primer Paso para Sanar
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
+                  Al entender la Ley Biológica que sostiene tu síntoma, el miedo al diagnóstico desaparece y puedes iniciar un proceso profundo de transformación.
+                </p>
+                <div className="pt-2">
+                  <button
+                    onClick={() => setTab('escaner')}
+                    className="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-xl text-xs sm:text-sm shadow-lg transition-all"
+                  >
+                    Escanear Mi Síntoma Ahora →
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PESTAÑA 2: DICCIONARIO COMPLETO (A-Z) DE "EL DICCIONARIO PROHIBIDO DEL CUERPO" */}
+          {tab === 'diccionario' && (
+            <div className="space-y-6">
+              
+              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 space-y-4 backdrop-blur-sm">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-1">
+                  <h2 className="text-xl font-cinzel font-bold text-amber-400">
+                    Diccionario PES Completo ({BANCO_PES.length} Enfermedades)
+                  </h2>
+                  <span className="text-xs text-slate-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
+                    Basado en "El Diccionario Prohibido del Cuerpo"
+                  </span>
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    value={busqueda}
+                    onChange={(e) => { setBusqueda(e.target.value); setPaginaActual(1); }}
+                    placeholder="Buscar por enfermedad, órgano o emoción (ej: Gastritis, Pulmón, Miedo)..."
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {['TODAS', 'Endodermo', 'Mesodermo', 'Ectodermo'].map((capa) => (
+                    <button
+                      key={capa}
+                      onClick={() => { setCapaFiltro(capa); setPaginaActual(1); }}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        capaFiltro === capa
+                          ? 'bg-amber-500 text-slate-950 font-bold'
+                          : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                      }`}
+                    >
+                      {capa}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {listaFiltrada.length === 0 ? (
+                <div className="text-center py-12 bg-slate-900/40 rounded-2xl border border-slate-800">
+                  <p className="text-slate-400 text-sm">No se encontraron resultados para tu búsqueda.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {itemsPaginados.map((item) => (
+                    <div key={item.id} className="bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-start gap-2">
+                          <h3 className="text-lg font-bold text-amber-400">{item.nombre}</h3>
+                          <span className="text-[10px] uppercase font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded-md shrink-0">
+                            {item.capa}
+                          </span>
+                        </div>
+
+                        <p className="text-xs text-slate-400">
+                          <strong className="text-slate-300">Órgano afectado:</strong> {item.organo}
+                        </p>
+
+                        <p className="text-xs sm:text-sm text-slate-200 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 leading-relaxed">
+                          <strong className="text-amber-400/90 block mb-1 text-[11px] uppercase tracking-wider">Conflicto Psicológico:</strong>
+                          {item.conflicto}
+                        </p>
+
+                        <p className="text-xs text-slate-400">
+                          <strong className="text-slate-300">Fase del síntoma:</strong> {item.fase}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 mt-2 border-t border-slate-800/80">
+                        <button
+                          onClick={() => evaluarEnEscaner(item.nombre)}
+                          className="w-full py-2.5 bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-semibold rounded-xl text-xs transition-all flex items-center justify-center gap-2"
+                        >
+                          Evaluar en Escáner Bioemocional →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {totalPaginas > 1 && (
+                <div className="flex justify-center items-center gap-2 pt-6">
+                  <button
+                    disabled={paginaActual === 1}
+                    onClick={() => {
+                      setPaginaActual(p => Math.max(p - 1, 1));
+                      window.scrollTo({ top: 300, behavior: 'smooth' });
+                    }}
+                    className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold disabled:opacity-40 hover:border-amber-500/50"
+                  >
+                    Anterior
+                  </button>
+                  <span className="text-xs text-slate-400 px-3">
+                    Página {paginaActual} de {totalPaginas}
+                  </span>
+                  <button
+                    disabled={paginaActual === totalPaginas}
+                    onClick={() => {
+                      setPaginaActual(p => Math.min(p + 1, totalPaginas));
+                      window.scrollTo({ top: 300, behavior: 'smooth' });
+                    }}
+                    className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold disabled:opacity-40 hover:border-amber-500/50"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              )}
+
+            </div>
+          )}
+
+          {/* PESTAÑA 3: ESCÁNER BIOEMOCIONAL */}
           {tab === 'escaner' && (
             <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
               
@@ -494,12 +1269,12 @@
                     </button>
 
                     <a
-                      href="https://caminoalinconsciente.cl/"
+                      href={WEBSITE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl transition-all flex items-center justify-center gap-2 border border-slate-700"
                     >
-                      <span>🔗</span> Ir a Camino Al Inconsciente
+                      <span>🌐</span> Ir a Camino Al Inconsciente
                     </a>
                   </div>
 
@@ -515,100 +1290,7 @@
             </div>
           )}
 
-          {/* PESTAÑA 2: DICCIONARIO PES */}
-          {tab === 'diccionario' && (
-            <div className="space-y-6">
-              
-              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 space-y-4 backdrop-blur-sm">
-                <div>
-                  <input
-                    type="text"
-                    value={busqueda}
-                    onChange={(e) => { setBusqueda(e.target.value); setPaginaActual(1); }}
-                    placeholder="Buscar por síntoma, órgano o conflicto (ej: Colon, Miedo, Piel)..."
-                    className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-100 focus:outline-none focus:border-amber-500"
-                  />
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {['TODAS', 'Endodermo', 'Mesodermo', 'Ectodermo'].map((capa) => (
-                    <button
-                      key={capa}
-                      onClick={() => { setCapaFiltro(capa); setPaginaActual(1); }}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                        capaFiltro === capa
-                          ? 'bg-amber-500 text-slate-950'
-                          : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                      }`}
-                    >
-                      {capa}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {itemsPaginados.map((item) => (
-                  <div key={item.id} className="bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-start">
-                        <h3 className="text-lg font-bold text-amber-400">{item.nombre}</h3>
-                        <span className="text-[10px] uppercase font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2 py-0.5 rounded-md">
-                          {item.capa}
-                        </span>
-                      </div>
-
-                      <p className="text-xs text-slate-400">
-                        <strong className="text-slate-300">Órgano:</strong> {item.organo}
-                      </p>
-
-                      <p className="text-sm text-slate-200 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
-                        <strong className="text-amber-400/90 block mb-1 text-xs uppercase tracking-wider">Conflicto Psicológico:</strong>
-                        {item.conflicto}
-                      </p>
-
-                      <p className="text-xs text-slate-400">
-                        <strong className="text-slate-300">Fase del Síntoma:</strong> {item.fase}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 mt-2 border-t border-slate-800/80">
-                      <button
-                        onClick={() => evaluarEnEscaner(item.nombre)}
-                        className="w-full py-2.5 bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-semibold rounded-xl text-xs transition-all flex items-center justify-center gap-2"
-                      >
-                        Evaluar en Escáner Bioemocional →
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {totalPaginas > 1 && (
-                <div className="flex justify-center items-center gap-2 pt-6">
-                  <button
-                    disabled={paginaActual === 1}
-                    onClick={() => setPaginaActual(p => Math.max(p - 1, 1))}
-                    className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold disabled:opacity-40"
-                  >
-                    Anterior
-                  </button>
-                  <span className="text-xs text-slate-400 px-3">
-                    Página {paginaActual} de {totalPaginas}
-                  </span>
-                  <button
-                    disabled={paginaActual === totalPaginas}
-                    onClick={() => setPaginaActual(p => Math.min(p + 1, totalPaginas))}
-                    className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold disabled:opacity-40"
-                  >
-                    Siguiente
-                  </button>
-                </div>
-              )}
-
-            </div>
-          )}
-
+          {/* Footer Corporativo */}
           <footer className="mt-16 text-center border-t border-slate-800/80 pt-8 pb-4">
             <CaminoLogo className="w-full max-w-xs mx-auto mb-4 opacity-80" />
             <p className="text-xs text-slate-500">
