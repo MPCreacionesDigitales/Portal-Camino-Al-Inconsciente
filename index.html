@@ -163,7 +163,7 @@
       { id: 21, nombre: "Anorexia", organo: "Hipotálamo / sistema digestivo", capa: "Ectodermo / Endodermo", conflicto: "Deseo de control, rechazo materno o del crecimiento.", fase: "Simpaticotónica (falta de apetito, hipervigilancia)." },
       { id: 22, nombre: "Apendicitis", organo: "Apéndice (intestino grueso)", capa: "Endodermo", conflicto: "No poder evacuar una situación sucia o repugnante.", fase: "Vagotónica (inflamación aguda en reparación)." },
       { id: 23, nombre: "Aplasia medular", organo: "Médula ósea", capa: "Mesodermo Nuevo", conflicto: "Desvalorización total y existencial, pérdida del sentido de la vida.", fase: "Simpaticotónica (inhibición celular profunda)." },
-      { id: 24, nombre: "Arritmia", organo: "Nódulo sinusal / miocardio", capa: "Mesodermo Nuevo / Ectodermo", conflicto: "Miedo en el territorio, susto inesperado, conflicto existencial.", fase: "Simpaticotónica (alteración del ritmo cardíaco)." },
+      { id: 24, nombre: "Arritmia", organo: "Nódulo sinusal / corazón", capa: "Mesodermo Nuevo / Ectodermo", conflicto: "Miedo en el territorio, susto inesperado, conflicto existencial.", fase: "Simpaticotónica (alteración del ritmo cardíaco)." },
       { id: 25, nombre: "Artritis", organo: "Articulaciones", capa: "Mesodermo Nuevo", conflicto: "Desvalorización por falta de rendimiento o conflicto con el movimiento.", fase: "Vagotónica (inflamación aguda en reparación)." },
       { id: 26, nombre: "Artrosis", organo: "Cartílago y hueso articular", capa: "Mesodermo Nuevo", conflicto: "Desvalorización crónica respecto a la movilidad o función articular.", fase: "Vagotónica (reconstrucción lenta con rigidez)." },
       { id: 27, nombre: "Asma", organo: "Bronquios", capa: "Ectodermo", conflicto: "Miedo en el territorio, opresión, falta de espacio.", fase: "Vagotónica (broncoespasmos y dificultad para respirar)." },
@@ -833,11 +833,19 @@
             </a>
           </header>
 
-          {/* Navegación Principal con el nuevo Botón al Sitio Web al FINAL */}
-          <div className="flex flex-wrap justify-center mb-8 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 max-w-2xl mx-auto shadow-lg gap-1">
+          {/* Navegación Principal: PRIMERO el botón hacia el Sitio Web con la pregunta solicitada */}
+          <div className="flex flex-wrap justify-center mb-8 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 max-w-3xl mx-auto shadow-lg gap-1.5">
+            <a
+              href={WEBSITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 min-w-[170px] py-3 px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-amber-400 border border-slate-700 shadow-md font-bold text-center"
+            >
+              <span>❓</span> ¿Qué es la biodescodificación?
+            </a>
             <button
               onClick={() => setTab('leyes')}
-              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
+              className={`flex-1 min-w-[110px] sm:min-w-[120px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 tab === 'leyes'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
                   : 'text-slate-400 hover:text-slate-200'
@@ -847,7 +855,7 @@
             </button>
             <button
               onClick={() => setTab('diccionario')}
-              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
+              className={`flex-1 min-w-[110px] sm:min-w-[120px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 tab === 'diccionario'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
                   : 'text-slate-400 hover:text-slate-200'
@@ -857,7 +865,7 @@
             </button>
             <button
               onClick={() => setTab('escaner')}
-              className={`flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
+              className={`flex-1 min-w-[110px] sm:min-w-[120px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 tab === 'escaner'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
                   : 'text-slate-400 hover:text-slate-200'
@@ -865,14 +873,6 @@
             >
               <span>✨</span> Escáner
             </button>
-            <a
-              href={WEBSITE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 min-w-[110px] sm:min-w-[130px] py-3 px-2 sm:px-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-amber-300 border border-slate-700/80 shadow-md"
-            >
-              <span>🌐</span> Sitio Web
-            </a>
           </div>
 
           {/* PESTAÑA 1: LAS 5 LEYES BIOLÓGICAS */}
@@ -1274,7 +1274,7 @@
                       rel="noopener noreferrer"
                       className="flex-1 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl transition-all flex items-center justify-center gap-2 border border-slate-700"
                     >
-                      <span>🌐</span> Ir a Camino Al Inconsciente
+                      <span>❓</span> ¿Qué es la biodescodificación?
                     </a>
                   </div>
 
